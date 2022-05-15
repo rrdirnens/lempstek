@@ -27,6 +27,10 @@ jobs:
         mkdir -p database
         touch database/database.sqlite
         php artisan migrate
+    - name: Build production assets
+      run: |
+        npm install
+        npm run prod
     # - name: Execute tests (Unit and Feature tests) via PHPUnit
     #   env:
     #     DB_CONNECTION: sqlite
