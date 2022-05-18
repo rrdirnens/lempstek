@@ -5,8 +5,9 @@
 
 
 <body>
-	<h1>dev env</h1>
+	<h1>deploy 1</h1>
 	<h2>Places I'd Like to Visit</h2>
+
 	<ul>
 		@foreach ($togo as $newplace)
 		<li>{{ $newplace->name }}</li>
