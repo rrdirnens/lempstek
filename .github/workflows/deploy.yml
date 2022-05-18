@@ -21,7 +21,7 @@ jobs:
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
           port: ${{ secrets.PORT }}
+          username: ${{ secrets.USERNAME }}
           key: ${{ secrets.SSHKEY }}
           script: "cd /var/www/travellist && ./.scripts/deploy.sh"
