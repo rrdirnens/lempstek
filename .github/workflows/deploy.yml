@@ -24,4 +24,4 @@ jobs:
           port: ${{ secrets.PORT }}
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.SSHKEY }}
-          script: "cd /var/www/travellist && ./.scripts/deploy.sh"
+          script: "cd /var/www/travellist && sudo ./.scripts/deploy.sh"
