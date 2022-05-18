@@ -10,13 +10,13 @@
         "laravel/framework": "^9.2",
         "laravel/sanctum": "^2.14.1",
         "laravel/tinker": "^2.7",
-        "sebastian/phpcpd": "^6.0"
+        "sebastian/phpcpd": "^6.0",
+        "nunomaduro/collision": "^6.1",
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",
         "laravel/sail": "^1.0.1",
         "mockery/mockery": "^1.4.4",
-        "nunomaduro/collision": "^6.1",
         "phpunit/phpunit": "^9.5.10",
         "spatie/laravel-ignition": "^1.0"
     },
