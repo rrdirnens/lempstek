@@ -5,7 +5,7 @@
 
 
 <body>
-	<h1>deploy 1</h1>
+	<h1>deploy 2</h1>
 	<h2>Places I'd Like to Visit</h2>
 
 	<ul>
