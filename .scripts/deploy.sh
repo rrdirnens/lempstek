@@ -19,6 +19,12 @@ php artisan clear-compiled
 # Recreate cache
 php artisan optimize
 
+# Remove node_modules (this solves NPM being a moody bitch sometimes)
+rm -rf node_modules
+
+# Install NPM with dependencies
+npm install
+
 # Compile npm assets
 npm run prod
 
