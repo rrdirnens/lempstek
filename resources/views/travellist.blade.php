@@ -1,25 +1,13 @@
 <html>
 <head>
-	<title>Travel List</title>
+	<title>Entertainment calendar v0.1</title>
 </head>
 
 
 <body>
-	<h1>deploy 9</h1>
-	<h2>Places I'd Like to Visit</h2>
+	<h1>Entertainment calendar v0.1 || {{env('APP_ENV')}}</h1>
 
-	<ul>
-		@foreach ($togo as $newplace)
-		<li>{{ $newplace->name }}</li>
-		@endforeach
-	</ul>
 	
-	<h2>Places I've Already Beenwevwe To</h2>
-	<ul>
-		@foreach ($visited as $place)
-		<li>{{ $place->name }}</li>
-		@endforeach
-	</ul>
 	{{-- @push('scripts') --}}
 		<script src="js/app.js"></script>	
 	{{-- @endpush --}}
