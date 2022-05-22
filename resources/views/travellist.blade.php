@@ -5,8 +5,18 @@
 
 
 <body>
-	<h1>Entertainment calendar v0.1 || {{env('APP_ENV')}}</h1>
+	<h1>Entertainment calendar v0.1 || {{config('app.env')}}</h1>
 
+	<div>
+		<ul>
+			<li>
+				{{config('app.env')}}
+			</li>
+			<li>
+				{{config('app.debug')}}
+			</li>
+		</ul>
+	</div>
 	
 	{{-- @push('scripts') --}}
 		<script src="js/app.js"></script>	
