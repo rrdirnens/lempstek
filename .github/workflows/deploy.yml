@@ -10,8 +10,8 @@ on:
   #   branches:
   #     - production
       
-# env:
-#   TMDB_API_KEY: ${{ secrets.TMDBKEY }}
+env:
+  TMDB_API_KEY: ${{ secrets.TMDBKEY }}
 
 # Authenticate to the the server via ssh 
 # and run our deployment script 
@@ -28,17 +28,3 @@ jobs:
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.SSHKEY }}
           script: "cd /var/www/travellist && .scripts/deploy.sh"
-      - name: Create env file
-        env: 
-          tmdb_api_key: ${{ secrets.TMDBKEY }}
-        run: | 
-          touch .env
-                    
-          echo "echo TMDB_API_KEY="$tmdb_api_key" > .env"          
-          echo TMDB_API_KEY="$tmdb_api_key" > .env
-          
-          echo "cat .env"
-          cat .env
-
-          echo "ls -a ."
-          ls -a .

@@ -7,6 +7,10 @@ echo "Deployment started ..."
 # if already is in maintenance mode
 (php artisan down) || true
 
+# Create env file and add github secrets
+touch .env          
+echo TMDB_API_KEY=$TMDB_API_KEY > .env
+
 # Pull the latest version of the app (try master instead of production)
 git pull origin master
 
