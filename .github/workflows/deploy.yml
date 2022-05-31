@@ -33,7 +33,7 @@ jobs:
           cat .env
 
           echo "ls -a ."
-          ls -a .s
+          ls -a .
       - name: Deploy to server
         uses: appleboy/ssh-action@master
         with:
