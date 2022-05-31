@@ -9,7 +9,7 @@ echo "Deployment started ..."
 
 # Create env file and add github secrets
 touch .env          
-echo TMDB_API_KEY=$api_gh_secret > .env
+echo TMDB_API_KEY="$api_gh_secret" > .env
 cat .env
 ls -a .
 
