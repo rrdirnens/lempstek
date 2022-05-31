@@ -11,7 +11,7 @@ on:
   #     - production
       
 env:
-  TMDB_API_KEY: ${{ secrets.TMDBKEY }}
+  api_gh_secret: ${{ secrets.TMDBKEY }}
 
 # Authenticate to the the server via ssh 
 # and run our deployment script 
