@@ -20,6 +20,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - name: Create env file
+        run: | 
+          touch .env
+          echo TMDB_API_KEY=${{ secrets.TMDBKEY }} >> .env
+          cat .env
       - name: Deploy to server
         uses: appleboy/ssh-action@master
         with:
@@ -27,4 +32,4 @@ jobs:
           port: ${{ secrets.PORT }}
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.SSHKEY }}
-          script: "export TMDB_API_KEY=${{ secrets.TMDBKEY }} && cd /var/www/travellist && .scripts/deploy.sh"
+          script: "cd /var/www/travellist && .scripts/deploy.sh"
