@@ -10,6 +10,9 @@ on:
   #   branches:
   #     - production
       
+env:
+  TMDB_API_KEY: ${{ secrets.TMDBKEY }}
+
 # Authenticate to the the server via ssh 
 # and run our deployment script 
 jobs:
