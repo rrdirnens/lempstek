@@ -21,10 +21,19 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Create env file
+        env: 
+          tmdb_api_key: ${{ secrets.TMDBKEY }}
         run: | 
           touch .env
-          echo TMDB_API_KEY=${{ secrets.TMDBKEY }} >> .env
+                    
+          echo "echo TMDB_API_KEY="$tmdb_api_key" >> .env"          
+          echo TMDB_API_KEY="$tmdb_api_key" >> .env
+          
+          echo "cat .env"
           cat .env
+
+          echo "ls -a ."
+          ls -a .s
       - name: Deploy to server
         uses: appleboy/ssh-action@master
         with:
