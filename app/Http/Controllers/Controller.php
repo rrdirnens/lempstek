@@ -13,7 +13,7 @@ class Controller extends BaseController
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
     public function home() {
-        $key = env('TMDB_API_KE');
+        $key = env('TMDB_API_KEY');
 
         //search
         // $tvSearch = Client::get('https://api.themoviedb.org/3/search/tv', [
