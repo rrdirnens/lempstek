@@ -20,6 +20,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - name: Deploy to server
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          port: ${{ secrets.PORT }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.SSHKEY }}
+          script: "cd /var/www/travellist && .scripts/deploy.sh"
       - name: Create env file
         env: 
           tmdb_api_key: ${{ secrets.TMDBKEY }}
@@ -34,11 +42,3 @@ jobs:
 
           echo "ls -a ."
           ls -a .
-      - name: Deploy to server
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.HOST }}
-          port: ${{ secrets.PORT }}
-          username: ${{ secrets.USERNAME }}
-          key: ${{ secrets.SSHKEY }}
-          script: "cd /var/www/travellist && .scripts/deploy.sh"
