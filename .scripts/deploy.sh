@@ -10,6 +10,9 @@ echo "Deployment started ..."
 # Create env file and add github secrets
 touch .env          
 echo TMDB_API_KEY=$TMDB_API_KEY > .env
+cat .env
+ls -a .
+
 
 # Pull the latest version of the app (try master instead of production)
 git pull origin master
