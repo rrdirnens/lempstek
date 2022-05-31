@@ -21,13 +21,17 @@
 		// dd($entertainment)
 	@endphp
 
-	@foreach ($entertainment as $item)
-		
-		<h2>{{$item['name']}}</h2>
-		<div><strong>Last ep: </strong> {{$item['last_episode_to_air']->air_date ?? 'no info'}}</div>
-		<div><strong>Next ep: </strong> {{$item['next_episode_to_air']->air_date ?? 'no info'}}</div>
+	@if (isset($entertainment))
+		@foreach ($entertainment as $item)
+			
+			<h2>{{$item['name']}}</h2>
+			<div><strong>Last ep: </strong> {{$item['last_episode_to_air']->air_date ?? 'no info'}}</div>
+			<div><strong>Next ep: </strong> {{$item['next_episode_to_air']->air_date ?? 'no info'}}</div>
 
-	@endforeach
+		@endforeach
+	@else
+		API connection not established
+	@endif
 	
 	{{-- @push('scripts') --}}
 		<script src="js/app.js"></script>	
