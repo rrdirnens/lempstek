@@ -34,8 +34,8 @@ jobs:
         run: | 
           touch .env
                     
-          echo "echo TMDB_API_KEY="$tmdb_api_key" >> .env"          
-          echo TMDB_API_KEY="$tmdb_api_key" >> .env
+          echo "echo TMDB_API_KEY="$tmdb_api_key" > .env"          
+          echo TMDB_API_KEY="$tmdb_api_key" > .env
           
           echo "cat .env"
           cat .env
