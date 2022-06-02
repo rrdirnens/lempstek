@@ -28,6 +28,7 @@ jobs:
           echo "${{ env.api_gh_secret }}"
       - name: Delete .env file and add the new one
         run: |
+          ls -a .
           rm .env
           echo ".env deleted "
           touch .env          
