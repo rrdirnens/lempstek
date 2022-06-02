@@ -24,4 +24,4 @@ jobs:
           port: ${{ secrets.PORT }}
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.SSHKEY }}
-          script: "cd /var/www/travellist && rm .env && echo 'TMDB_API_KEY=${{ secrets.TMDBKEY }}' > .env && .scripts/deploy.sh"
+          script: "cd /var/www/travellist && rm .env && .scripts/deploy.sh && echo 'TMDB_API_KEY=${{ secrets.TMDBKEY }}' > .env"
