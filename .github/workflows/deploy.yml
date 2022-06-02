@@ -29,6 +29,9 @@ jobs:
       - name: Delete .env file and add the new one
         run: |
           pwd
+          cd /var/www/
+          ls
+          pwd
           ls -a .
           rm .env
           echo ".env deleted "
