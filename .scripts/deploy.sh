@@ -15,11 +15,12 @@ if [ -f $filename ]; then
     rm .env
     echo ".env deleted "
 fi
+env
 touch .env          
 echo TMDB_API_KEY=$api_gh_secret > .env
 cat .env
 ls -a .
-
+env
 
 # Pull the latest version of the app (try master instead of production)
 git pull origin master
