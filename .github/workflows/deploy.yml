@@ -28,7 +28,7 @@ jobs:
           echo "${{ env.api_gh_secret }}"
       - name: Delete .env file and add the new one
         run: |
-          cd /var/www/travellist
+          ls
           filename='.env'
           if [ -f $filename ]; then
               rm .env
