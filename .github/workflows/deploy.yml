@@ -38,7 +38,7 @@ jobs:
           touch .env          
           echo "echo ${{ env.api_gh_secret }}"
           echo ${{ env.api_gh_secret }}
-          echo TMDB_API_KEY=${{ env.api_gh_secret }} > .env
+          echo TMDB_API_KEY=12345 > .env
           cat .env
           ls -a .
           env
