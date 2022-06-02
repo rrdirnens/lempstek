@@ -22,10 +22,10 @@ jobs:
       - uses: actions/checkout@v2
       - name: Set env var
         run: |
-        echo "api_gh_secret=${{ secrets.TMDBKEY }}" >> $GITHUB_ENV
+          echo "api_gh_secret=${{ secrets.TMDBKEY }}" >> $GITHUB_ENV
       - name: Check previously set env var
         run: |
-        echo "${{ env.api_gh_secret }}"
+          echo "${{ env.api_gh_secret }}"
       - name: Deploy to server
         uses: appleboy/ssh-action@master
         with:
