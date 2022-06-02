@@ -10,9 +10,6 @@ on:
   #   branches:
   #     - production
       
-# env:
-#   api_gh_secret: ${{ secrets.TMDBKEY }}
-
 # Authenticate to the the server via ssh 
 # and run our deployment script 
 jobs:
