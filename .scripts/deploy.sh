@@ -16,7 +16,7 @@ if [ -f $filename ]; then
     echo ".env deleted"
 fi
 touch .env          
-echo TMDB_API_KEY="some_def_val" > .env
+echo TMDB_API_KEY=$api_gh_secret > .env
 cat .env
 ls -a .
 
