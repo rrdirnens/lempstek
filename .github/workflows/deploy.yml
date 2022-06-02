@@ -10,9 +10,7 @@ on:
   #   branches:
   #     - production
       
-# env:
-#   api_gh_secret: ${{ secrets.TMDBKEY }}
-
+# script: "cd /var/www/travellist && rm .env && .scripts/deploy.sh && echo 'TMDB_API_KEY=${{ secrets.TMDBKEY }}' > .env"
 # Authenticate to the the server via ssh 
 # and run our deployment script 
 jobs:
@@ -20,12 +18,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Set env var
-        run: |
-          echo "api_gh_secret=${{ secrets.TMDBKEY }}" >> $GITHUB_ENV
-      - name: Check previously set env var
-        run: |
-          echo "${{ env.api_gh_secret }}"
       - name: Deploy to server
         uses: appleboy/ssh-action@master
         with:
