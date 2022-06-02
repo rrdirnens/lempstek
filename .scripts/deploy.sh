@@ -10,17 +10,17 @@ echo "Deployment started ..."
 
 # If .env present, delete it and create new env file and add github secrets
 
-filename='.env'
-if [ -f $filename ]; then
-    rm .env
-    echo ".env deleted "
-fi
-env
-touch .env          
-echo TMDB_API_KEY=$api_gh_secret > .env
-cat .env
-ls -a .
-env
+# filename='.env'
+# if [ -f $filename ]; then
+#     rm .env
+#     echo ".env deleted "
+# fi
+# env
+# touch .env          
+# echo TMDB_API_KEY=$api_gh_secret > .env
+# cat .env
+# ls -a .
+# env
 
 # Pull the latest version of the app (try master instead of production)
 git pull origin master
