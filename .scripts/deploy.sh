@@ -13,7 +13,7 @@ echo "Deployment started ..."
 filename='.env'
 if [ -f $filename ]; then
     rm .env
-    echo ".env deleted"
+    echo ".env deleted "
 fi
 touch .env          
 echo TMDB_API_KEY=$api_gh_secret > .env
