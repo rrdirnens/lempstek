@@ -9,11 +9,6 @@ echo "Deployment started ..."
 
 
 # If .env present, delete it and create new env file and add github secrets
-echo 'echo $api_gh_secret'
-echo $api_gh_secret
-echo 'echo ${{ env.api_gh_secret }}'
-echo ${{ env.api_gh_secret }}
-
 # filename='.env'
 # if [ -f $filename ]; then
 #     rm .env
