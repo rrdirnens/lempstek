@@ -7,7 +7,14 @@ echo "Deployment started ..."
 # if already is in maintenance mode
 (php artisan down) || true
 
-# Create env file and add github secrets
+
+# If .env present, delete it and create new env file and add github secrets
+
+filename='.env'
+if [ -f $filename ]; then
+    rm .env
+    echo ".env deleted"
+fi
 touch .env          
 echo TMDB_API_KEY="some_def_val" > .env
 cat .env
