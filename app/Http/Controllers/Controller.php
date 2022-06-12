@@ -15,13 +15,13 @@ class Controller extends BaseController
     public function home() {
         $key = env('TMDB_API_KEY') ?? null;
 
-        //search
+        // search
         // $tvSearch = Client::get('https://api.themoviedb.org/3/search/tv', [
         //     'api_key' => $key,
         //     'query' => 'the+walking+dead',
         // ]);
         
-        //get TV show
+        // get TV show
         // $tvShow = Client::get('https://api.themoviedb.org/3/tv/1402', [
         //     'api_key' => $key,
         // ]);
