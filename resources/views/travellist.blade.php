@@ -17,24 +17,44 @@
 			</li>
 		</ul>
 	</div>
-	@php
-		// dd($entertainment)
-	@endphp
 
-	@if (isset($entertainment))
-		@foreach ($entertainment as $item)
-			
-			<h2>{{$item['name']}}</h2>
-			<div><strong>Last ep: </strong> {{$item['last_episode_to_air']->air_date ?? 'no info'}}</div>
-			<div><strong>Next ep: </strong> {{$item['next_episode_to_air']->air_date ?? 'no info'}}</div>
 
-		@endforeach
-	@else
-		API connection not established
+	<div>Search for stuff:</div>
+	<form action="/" method="POST">
+		@csrf
+		<input type="text" name="search_query" placeholder="Enter keywords" required>
+		<button type="submit">Search</button>
+	</form>
+
+	@if (isset($search_results))
+		<div style="display:flex;">
+			@if ($search_results->tv)
+				<div>
+					<h1>TV shows</h1>
+					@foreach ($search_results->tv as $item)
+					<div>
+						<strong>{{$item->name}}</strong>
+					</div>
+					<div class="" style="margin-bottom: 5px;">{{$item->id}}</div>
+					@endforeach
+				</div>
+			@endif
+			@if ($search_results->movies)
+				<div>
+					<h1>Movies</h1>
+					@foreach ($search_results->movies as $item)
+					<div>
+						<strong>{{$item->title}}</strong>
+					</div>
+					<div class="" style="margin-bottom: 5px;">{{$item->id}}</div>
+					@endforeach
+				</div>
+			@endif
+		</div>
 	@endif
 	
-	{{-- @push('scripts') --}}
-		<script src="js/app.js"></script>	
-	{{-- @endpush --}}
+	<div>{{ isset($search_msg) ? $search_msg : '' }}</div>
+	
+	<script src="js/app.js"></script>	
 </body>
 </html>

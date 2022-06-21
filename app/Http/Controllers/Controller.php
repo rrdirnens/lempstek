@@ -7,39 +7,52 @@ use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\Http as Client;
+use Illuminate\Http\Request;
+use stdClass;
 
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
+    protected $tmdbkey;
+
+    public function __construct() {
+        $this->tmdbkey = config('tmdb.key') ?? null;
+    }
+
     public function home() {
-        $key = config('tmdb.key') ?? null;
 
-        // search
-        // $tvSearch = Client::get('https://api.themoviedb.org/3/search/tv', [
-        //     'api_key' => $key,
-        //     'query' => 'the+walking+dead',
-        // ]);
+        // if (!isset($this->tmdbkey)) return view('travellist'); 
+
         
-        // get TV show
-        // $tvShow = Client::get('https://api.themoviedb.org/3/tv/1402', [
-        //     'api_key' => $key,
-        // ]);
-        if (!isset($key)) return view('travellist'); 
-        // dd($key);
+        return view('travellist');
+    }
 
-        $response = Client::get('https://api.themoviedb.org/3/tv/1402', [
-            'api_key' => $key,
+    public function entertainmentSearch (Request $request) {
+        $query = $request->input('search_query');
+
+        $tvSearch = Client::get('https://api.themoviedb.org/3/search/tv', [
+            'api_key' => $this->tmdbkey,
+            'query' => $query,
+        ]);
+        $movieSearch = Client::get('https://api.themoviedb.org/3/search/movie', [
+            'api_key' => $this->tmdbkey,
+            'query' => $query,
         ]);
 
+        $results = new stdClass();
+        $results->tv = $tvSearch->object()->results;
+        $results->movies = $movieSearch->object()->results;
 
-        $entertainment[0]= [];
-        $entertainment[0]['name'] = $response->object()->name;
-        $entertainment[0]['last_episode_to_air'] = $response->object()->last_episode_to_air;
-        $entertainment[0]['next_episode_to_air'] = $response->object()->next_episode_to_air;
+        // dd($results);
+        if (empty($results)) {
+            $this->data['search_results'] = null;
+            $this->data['search_msg'] = 'Sorry, no result found. Try again.';
+        } else {
+            $this->data['search_results'] = $results;
+            $this->data['search_msg'] = '';
+        }
 
-        return view('travellist',  [
-            'entertainment' => $entertainment
-        ]);
+        return view('travellist', $this->data);
     }
 }
