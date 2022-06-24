@@ -18,12 +18,14 @@ class Controller extends BaseController
 
     public function __construct() {
         $this->tmdbkey = config('tmdb.key') ?? null;
+
+        
     }
 
     public function home() {
 
         // if (!isset($this->tmdbkey)) return view('travellist'); 
-
+        $this->data['env_var'] = env('RAND_VAR') ?? null;
         
         return view('travellist');
     }

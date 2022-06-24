@@ -15,6 +15,9 @@
 			<li>
 				{{config('app.debug')}}
 			</li>
+			<li>
+				{{env('RAND_VAR')}} <-- env variable test
+			</li>
 		</ul>
 	</div>
 
