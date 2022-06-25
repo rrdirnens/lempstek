@@ -22,7 +22,7 @@
 				{{env('RAND_VAR')}} <-- env variable test
 			</li>
 			<li>
-				{{-- {{phpinfo()}} --}}
+				{{phpinfo()}}
 			</li>
 		</ul>
 	</div>
