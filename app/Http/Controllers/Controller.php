@@ -25,9 +25,10 @@ class Controller extends BaseController
     public function home() {
 
         // if (!isset($this->tmdbkey)) return view('travellist'); 
-        // $this->data['env_var_environment'] = env('RAND_VAR') ?? null;
-        // $this->data['env_var_profile'] = env('ECDBUSER') ?? null;
-        // dd($this->data);
+        $this->data['env_var_envfile'] = env('DOTENVECDBPW') ?? null;
+        $this->data['env_var_profile'] = env('ECDBUSER') ?? null;
+        $this->data['env_var_envubuntu'] = getenv('ENVECDBPW') ?? null;
+        dd($this->data);
         return view('travellist');
     }
 
