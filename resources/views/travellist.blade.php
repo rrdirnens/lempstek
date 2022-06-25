@@ -15,15 +15,6 @@
 			<li>
 				{{config('app.debug')}}
 			</li>
-			<li>
-				{{env('ECDBUSER')}} <-- env variable test
-			</li>
-			<li>
-				{{env('RAND_VAR')}} <-- env variable test
-			</li>
-			<li>
-				{{phpinfo()}}
-			</li>
 		</ul>
 	</div>
 
