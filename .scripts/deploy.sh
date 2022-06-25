@@ -14,6 +14,7 @@ git pull origin master
 composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader
 
 # Clear the old cache
+php artisan config:clear
 php artisan clear-compiled
 
 # Recreate cache
