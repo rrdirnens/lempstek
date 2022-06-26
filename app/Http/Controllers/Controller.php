@@ -49,8 +49,8 @@ class Controller extends BaseController
         } else {
             $this->data['search_results'] = $results;
             $this->data['search_msg'] = '';
-        }
-
+        } 
+        
         return view('travellist', $this->data);
     }
 }
