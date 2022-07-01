@@ -148,4 +148,19 @@ return [
 
     ],
 
+    /*
+    |--------------------------------------------------------------------------
+    | Seeder admin user info
+    |--------------------------------------------------------------------------
+    | Default admin user info for seeder. These values are in the environment
+    | variables kept in .env files. You can change these values in the .env file.
+    |
+    */
+
+    'ec_admin' => [
+        'username' => env('ADMIN_USERNAME'),
+        'email' => env('ADMIN_EMAIL'),
+        'password' => env('ADMIN_PASSWORD'),
+    ],
+
 ];
