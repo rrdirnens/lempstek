@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
 
 
 /*
@@ -21,3 +22,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [Controller::class, 'home']);
 Route::post('/', [Controller::class, 'entertainmentSearch']);
+
+// Show Register/create form (user)
+Route::get('/register', [UserController::class, 'create']);
+
+// Create New (user)
+Route::post('/users', [UserController::class, 'store']);

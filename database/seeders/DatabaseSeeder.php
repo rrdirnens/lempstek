@@ -20,7 +20,7 @@ class DatabaseSeeder extends Seeder
     {
         
         User::create([
-            'username' => config('database.ec_admin.username'),
+            'name' => config('database.ec_admin.username'),
             'email' => config('database.ec_admin.email'),
             'password' => config('database.ec_admin.password'), // password
             'remember_token' => Str::random(10),

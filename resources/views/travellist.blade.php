@@ -18,6 +18,11 @@
 		</ul>
 	</div>
 
+	<div style="margin-bottom:30px;">
+		<h2>user actions</h2>
+		<a href="/register" style="padding:15px;">Register</a>
+	</div>
+
 
 	<div>Search for stuff:</div>
 	<form action="/" method="POST">
