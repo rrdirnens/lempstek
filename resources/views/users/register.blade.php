@@ -1,15 +1,14 @@
 <html>
 <head>
 	<title>register user</title>
-</head>
 
-{{-- tailwindcss cdn script tag --}}
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss/dist/tailwind.min.css">
+	{{-- tailwindcss cdn script tag --}}
+	<script src="https://cdn.tailwindcss.com"></script>
+</head>
 
 <body class="w-1/2 p-4">
 	<h1 class="">Register user</h1>
 
-    {{-- laragigs brad traversy user register form --}}
     <form method="POST" action="/users">
         @csrf
         <div class="mb-6">

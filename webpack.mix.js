@@ -1,3 +1,4 @@
+const { notify } = require('browser-sync');
 const mix = require('laravel-mix');
 
 /*
@@ -16,4 +17,7 @@ mix.js('resources/js/app.js', 'public/js')
         //
 ]);
 
-mix.browserSync('localhost:8000');
+mix.browserSync({
+    proxy: 'localhost:8000',
+    notify: false
+});

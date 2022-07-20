@@ -1,27 +1,56 @@
 <html>
 <head>
 	<title>Entertainment calendar v0.1</title>
+
+	{{-- tailwindcss cdn script tag --}}
+	<script src="https://cdn.tailwindcss.com"></script>
 </head>
 
+<body class="p-4">
+	<nav>
+		<div class="container mx-auto">
+			<div class="flex justify-between items-center">
+				<div class="flex items-center">
+					<a href="{{ route('home') }}" class="text-2xl font-bold">Entertainment calendar</a>
+				</div>
+				<div class="flex items-center">
+					<a href="{{ route('home') }}" class="text-xl p-2 font-bold">Home</a>
+					@auth
+					<form action="/logout" method="POST">
+						@csrf
+						<button type="submit" class="text-xl p-2 font-bold">
+							Logout
+						</button>
+					</form>
+					@else
+					<a href="{{ route('register') }}" class="text-xl p-2 font-bold">Register</a>
+					<a href="{{ route('login') }}" class="text-xl p-2 font-bold">Login</a>
+					@endauth
+				</div>
+			</div>
+		</div>
+	</nav>
 
-<body>
-	<h1>Entertainment calendar v0.1 || {{config('app.env')}}</h1>
+	<h1 class="mb-4 text-primary text-xl">Entertainment calendar v0.1 || {{config('app.env')}}</h1>
 
-	<div>
+	<div class="mb-4">
 		<ul>
 			<li>
-				{{config('app.env')}}
+				- {{config('app.env')}}
 			</li>
 			<li>
-				{{config('app.debug')}}
+				- {{config('app.debug')}}
 			</li>
 		</ul>
 	</div>
 
 	<div style="margin-bottom:30px;">
-		<h2>user actions</h2>
-		<a href="/register" style="padding:15px;">Register</a>
-	</div>
+		<h2>USER ACTIONS</h2>
+		<a href="/register" class="inline-block p-4 text-slate-50 bg-slate-600 rounded">Register</a>
+		@if(session()->has('message'))
+			<h3 class="text-green-400">{{session('message')}}</h3>
+		@endif
+	</div>	
 
 
 	<div>Search for stuff:</div>

@@ -20,11 +20,20 @@ use App\Http\Controllers\UserController;
 
 
 
-Route::get('/', [Controller::class, 'home']);
+Route::get('/', [Controller::class, 'home'])->name('home');
 Route::post('/', [Controller::class, 'entertainmentSearch']);
 
 // Show Register/create form (user)
-Route::get('/register', [UserController::class, 'create']);
+Route::get('/register', [UserController::class, 'create'])->name('register');
 
 // Create New (user)
-Route::post('/users', [UserController::class, 'store']);
+Route::post('/users', [UserController::class, 'store'])->name('users.store');
+
+// Show Login form (user)
+Route::get('/login', [UserController::class, 'login'])->name('login');
+
+// Login (user)
+Route::post('/users/authenticate', [UserController::class, 'authenticate'])->name('users.authenticate');
+
+// logout (user)
+Route::post('/logout', [UserController::class, 'logout'])->name('logout');
