@@ -23,7 +23,7 @@ class Controller extends BaseController
     }
 
     public function home() {
-        return view('travellist');
+        return view('home');
     }
 
     public function entertainmentSearch (Request $request) {
@@ -51,6 +51,6 @@ class Controller extends BaseController
             $this->data['search_msg'] = '';
         } 
         
-        return view('travellist', $this->data);
+        return view('home', $this->data);
     }
 }
