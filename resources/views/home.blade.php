@@ -29,16 +29,26 @@
 		<button type="submit">Search</button>
 	</form>
 
+	@error('user_show')
+		<p class="text-red-500 text-xs mt-1">{{$message}}</p>
+	@enderror
+	
+	@error('user_movie')
+		<p class="text-red-500 text-xs mt-1">{{$message}}</p>
+	@enderror
+	
 	@if (isset($search_results))
 		<div style="display:flex;">
 			@if ($search_results->tv)
 			<div>
 				<h1>TV shows</h1>
 				@foreach ($search_results->tv as $item)
-				<div>
-					<strong>{{$item->name}}</strong>
-				</div>
-				<div class="" style="margin-bottom: 5px;">{{$item->id}}</div>
+					<a href="{{route('users.tv.store', $item->id)}}">
+						<div>
+							<strong>{{$item->name}}</strong>
+						</div>
+						<div class="" style="margin-bottom: 5px;">{{$item->id}}</div>
+					</a>	
 				@endforeach
 			</div>
 			@endif
@@ -46,10 +56,12 @@
 			<div>
 				<h1>Movies</h1>
 				@foreach ($search_results->movies as $item)
-				<div>
-					<strong>{{$item->title}}</strong>
-				</div>
-				<div class="" style="margin-bottom: 5px;">{{$item->id}}</div>
+				<a href="{{route('users.movie.store', $item->id)}}">
+					<div>
+						<strong>{{$item->title}}</strong>
+					</div>
+					<div class="" style="margin-bottom: 5px;">{{$item->id}}</div>
+				</a>
 				@endforeach
 			</div>
 			@endif

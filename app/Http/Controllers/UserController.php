@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\ShowUser;
+use App\Models\MovieUser;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -93,5 +95,62 @@ class UserController extends Controller
         $request->session()->regenerateToken();
 
         return redirect('/')->with('message', 'You are now logged out!');
+    }
+
+    /**
+     * Add TV show to user
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function addTvShow(Request $request, $id) {
+        $user = auth()->user();
+        $show= $id;
+        
+        // new user show entry to the join table for user shows
+        $userShow = new ShowUser;
+        $userShow->user_id = $user->id;
+        $userShow->show_id = $show;
+        
+        // check for duplicate entries
+        $duplicate = ShowUser::where('user_id', $user->id)->where('show_id', $show)->first();
+        
+        if ($duplicate) {
+            return back()->withErrors(['user_show' => 'You already have this show!']);
+        } else {
+            $userShow->save();
+            return back()->with('message', 'Show added!');
+        }
+
+        dd($show, $user, $userShow);
+        return redirect('/')->with('message', 'TV show added!');
+    }
+
+    /**
+     * Add movie to user
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function addMovie(Request $request, $id) {
+        $user = auth()->user();
+        $movie= $id;
+        
+        // new user movie entry to the join table for user movies
+        $userMovie = new MovieUser;
+        $userMovie->user_id = $user->id;
+        $userMovie->movie_id = $movie;
+        
+        // check for duplicate entries
+        $duplicate = movieUser::where('user_id', $user->id)->where('movie_id', $movie)->first();
+        
+        if ($duplicate) {
+            return back()->withErrors(['user_movie' => 'You already have this movie!']);
+        } else {
+            $userMovie->save();
+            return back()->with('message', 'Movie added!');
+        }
+
+        return redirect('/')->with('message', 'Movie added!');
     }
 }

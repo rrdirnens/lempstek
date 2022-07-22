@@ -37,3 +37,9 @@ Route::post('/users/authenticate', [UserController::class, 'authenticate'])->nam
 
 // logout (user)
 Route::post('/logout', [UserController::class, 'logout'])->name('logout');
+
+// Add TV show to user
+Route::get('/user-tv/{id}', [UserController::class, 'addTvShow'])->name('users.tv.store');
+
+// Add movie to user
+Route::get('/user-movie/{id}', [UserController::class, 'addMovie'])->name('users.movie.store');

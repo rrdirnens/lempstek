@@ -18,8 +18,6 @@ class Controller extends BaseController
 
     public function __construct() {
         $this->tmdbkey = config('tmdb.key') ?? null;
-
-        
     }
 
     public function home() {
@@ -43,7 +41,7 @@ class Controller extends BaseController
         $results->movies = $movieSearch->object()->results;
 
         // dd($results);
-        if (empty($results)) {
+        if (empty($results->tv) && empty($results->movies)) {
             $this->data['search_results'] = null;
             $this->data['search_msg'] = 'Sorry, no result found. Try again.';
         } else {
