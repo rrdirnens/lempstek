@@ -41,5 +41,17 @@ Route::post('/logout', [UserController::class, 'logout'])->name('logout');
 // Add TV show to user
 Route::get('/user-tv/{id}', [UserController::class, 'addTvShow'])->name('users.tv.store');
 
+// Remove TV show from user
+Route::get('/user-tv/{id}/delete', [UserController::class, 'removeTvShow'])->name('users.tv.delete');
 // Add movie to user
 Route::get('/user-movie/{id}', [UserController::class, 'addMovie'])->name('users.movie.store');
+
+// Remove movie from user
+Route::get('/user-movie/{id}/delete', [UserController::class, 'removeMovie'])->name('users.movie.delete');
+
+// Show user's TV shows
+
+// Show user's movies
+
+// Show user's profile
+Route::get('/user/{id}', [UserController::class, 'show'])->name('users.profile');

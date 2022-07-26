@@ -125,6 +125,20 @@ class UserController extends Controller
         dd($show, $user, $userShow);
         return redirect('/')->with('message', 'TV show added!');
     }
+    /**
+     * Remove TV show from user
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function removeTvShow($id) {
+        $user = auth()->user();
+        
+        // delete user show entry from the join table for user shows
+        $userShow = ShowUser::where('user_id', $user->id)->where('show_id', $id)->first();
+        $userShow->delete();
+        
+        return back()->with('message', 'Show removed!');
+    }
 
     /**
      * Add movie to user
@@ -152,5 +166,43 @@ class UserController extends Controller
         }
 
         return redirect('/')->with('message', 'Movie added!');
+    }
+
+    /**
+     * Remove Movie from user
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function removeMovie($id) {
+        $user = auth()->user();
+        
+        // delete user movie entry to the join table for user movies
+        $userMovie = MovieUser::where('user_id', $user->id)->where('movie_id', $id)->first();
+        $userMovie->delete();
+        
+        return back()->with('message', 'Movie removed!');
+    }
+
+
+
+
+    /**
+     * Show the user profile view
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id) {
+        // check if authorized user is trying to view profile
+        if (auth()->user()->id != $id) {
+            return back()->withErrors(['user' => 'You entered the wrong user ID! We sent you back to YOUR profile.']);
+        }
+        $user = auth()->user();
+        $shows = ShowUser::where('user_id', $user->id)->get();
+        $movies = MovieUser::where('user_id', $user->id)->get();
+        $this->data['user'] = $user;
+        $this->data['shows'] = json_decode($shows);
+        $this->data['movies'] = json_decode($movies);
+        // dd($this->data);
+        return view('users.profile', $this->data);
     }
 }

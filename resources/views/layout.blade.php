@@ -15,16 +15,22 @@
                 </div>
                 <div class="flex items-center">
                     <a href="{{ route('home') }}" class="text-xl p-2 font-bold">Home</a>
+                    
                     @auth
-                    <form action="/logout" method="POST" class="mb-0">
-                        @csrf
-                        <button type="submit" class="text-xl p-2 font-bold">
-                            Logout
-                        </button>
-                    </form>
+                    
+                    <a href="{{ route('users.profile', 7) }}" class="text-xl p-2 font-bold">Profile</a>
+                        <form action="/logout" method="POST" class="mb-0">
+                            @csrf
+                            <button type="submit" class="text-xl p-2 font-bold">
+                                Logout
+                            </button>
+                        </form>
+                    
                     @else
-                    <a href="{{ route('register') }}" class="text-xl p-2 font-bold">Register</a>
-                    <a href="{{ route('login') }}" class="text-xl p-2 font-bold">Login</a>
+                    
+                        <a href="{{ route('register') }}" class="text-xl p-2 font-bold">Register</a>
+                        <a href="{{ route('login') }}" class="text-xl p-2 font-bold">Login</a>
+                    
                     @endauth
                 </div>
             </div>
