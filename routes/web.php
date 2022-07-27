@@ -3,11 +3,12 @@
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\MovieController;
 
 
 /*
 |--------------------------------------------------------------------------
-| common resource routes
+| Common resource routes
 |--------------------------------------------------------------------------
 | index - show all
 | show - show one
@@ -18,10 +19,14 @@ use App\Http\Controllers\UserController;
 | destroy - delete one
 */
 
-
-
 Route::get('/', [Controller::class, 'home'])->name('home');
 Route::post('/', [Controller::class, 'entertainmentSearch']);
+
+/*
+|--------------------------------------------------------------------------
+| User routes
+|--------------------------------------------------------------------------
+*/
 
 // Show Register/create form (user)
 Route::get('/register', [UserController::class, 'create'])->name('register');
@@ -39,12 +44,12 @@ Route::post('/users/authenticate', [UserController::class, 'authenticate'])->nam
 Route::post('/logout', [UserController::class, 'logout'])->name('logout');
 
 // Add TV show to user
-Route::get('/user-tv/{id}', [UserController::class, 'addTvShow'])->name('users.tv.store');
+Route::get('/user-tv/{id}', [UserController::class, 'addTvShow'])->name('users.tv.store')->middleware('auth');
 
 // Remove TV show from user
 Route::get('/user-tv/{id}/delete', [UserController::class, 'removeTvShow'])->name('users.tv.delete');
 // Add movie to user
-Route::get('/user-movie/{id}', [UserController::class, 'addMovie'])->name('users.movie.store');
+Route::get('/user-movie/{id}', [UserController::class, 'addMovie'])->name('users.movie.store')->middleware('auth');
 
 // Remove movie from user
 Route::get('/user-movie/{id}/delete', [UserController::class, 'removeMovie'])->name('users.movie.delete');
@@ -54,4 +59,15 @@ Route::get('/user-movie/{id}/delete', [UserController::class, 'removeMovie'])->n
 // Show user's movies
 
 // Show user's profile
-Route::get('/user/{id}', [UserController::class, 'show'])->name('users.profile');
+Route::get('/user/{id}', [UserController::class, 'show'])->name('users.profile')->middleware('auth');
+
+
+/*
+|--------------------------------------------------------------------------
+| Movie routes
+|--------------------------------------------------------------------------
+*/
+
+// Show movie page
+Route::get('/movies/{id}', [MovieController::class, 'showMovie'])->name('movies.show');
+

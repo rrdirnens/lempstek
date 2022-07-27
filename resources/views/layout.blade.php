@@ -18,7 +18,7 @@
                     
                     @auth
                     
-                    <a href="{{ route('users.profile', 7) }}" class="text-xl p-2 font-bold">Profile</a>
+                    <a href="{{ route('users.profile', auth()->user()->id) }}" class="text-xl p-2 font-bold">Profile</a>
                         <form action="/logout" method="POST" class="mb-0">
                             @csrf
                             <button type="submit" class="text-xl p-2 font-bold">

@@ -56,7 +56,8 @@
 			<div>
 				<h1>Movies</h1>
 				@foreach ($search_results->movies as $item)
-				<a href="{{route('users.movie.store', $item->id)}}">
+				<a href="{{route('users.movie.store', $item->id)}}">Add to calendar</a>
+				<a href="{{route('movies.show', $item->id)}}">
 					<div>
 						<strong>{{$item->title}}</strong>
 					</div>
