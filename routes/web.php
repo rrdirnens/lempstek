@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ShowController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\MovieController;
 
@@ -48,6 +49,7 @@ Route::get('/user-tv/{id}', [UserController::class, 'addTvShow'])->name('users.t
 
 // Remove TV show from user
 Route::get('/user-tv/{id}/delete', [UserController::class, 'removeTvShow'])->name('users.tv.delete');
+
 // Add movie to user
 Route::get('/user-movie/{id}', [UserController::class, 'addMovie'])->name('users.movie.store')->middleware('auth');
 
@@ -71,3 +73,5 @@ Route::get('/user/{id}', [UserController::class, 'show'])->name('users.profile')
 // Show movie page
 Route::get('/movies/{id}', [MovieController::class, 'showMovie'])->name('movies.show');
 
+// Show show page
+Route::get('/shows/{id}', [ShowController::class, 'showShow'])->name('shows.show');

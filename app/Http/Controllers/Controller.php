@@ -40,7 +40,6 @@ class Controller extends BaseController
         $results->tv = $tvSearch->object()->results;
         $results->movies = $movieSearch->object()->results;
 
-        // dd($results);
         if (empty($results->tv) && empty($results->movies)) {
             $this->data['search_results'] = null;
             $this->data['search_msg'] = 'Sorry, no result found. Try again.';
