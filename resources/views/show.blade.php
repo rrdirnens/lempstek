@@ -15,7 +15,7 @@
         @if ($show['next_episode_to_air'])
             <p class="mb-4">Next episode : {{$show['next_episode_to_air']['air_date']}}, in {{$show['next_release_calc']}} </p>
         @else
-            <p class="mb-4">Next episode : {{$show['next_episode_to_air'] ?? 'no info :('}}</p>        
+            <p class="mb-4">Next episode : no info :(</p>        
         @endif
         <p class="italic mb-2">Overview : {{$show['overview']}}</p>
         <img src="https://image.tmdb.org/t/p/w500{{ $show['backdrop_path'] }}" alt="backdrop" class="mb-2">
