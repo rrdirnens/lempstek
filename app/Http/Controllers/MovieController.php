@@ -5,18 +5,17 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Http as Client;
 use Illuminate\Http\Request;
 use stdClass;
+use App\Traits\GetMovieTrait;
 
 class MovieController extends Controller
 {
-    //
+    use GetMovieTrait;
+
     public function showMovie(Request $request, $id) {
-        
-        $key = $this->tmdbkey;
-        $client = new Client();
-        
-        $movie = $client::get("https://api.themoviedb.org/3/movie/$id", [
-            'api_key' => $key,
-        ]);   
+
+        $movie = $this->getMovieById($request, $id);
+
+        // TODO: check if movie exists
 
         $result = new stdClass();
         $result->movie = $movie->object();

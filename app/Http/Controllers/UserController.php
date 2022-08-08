@@ -6,9 +6,13 @@ use App\Models\User;
 use App\Models\ShowUser;
 use App\Models\MovieUser;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Traits\GetMovieTrait;
 
 class UserController extends Controller
 {
+    use GetMovieTrait;
+
     /**
      * Show the user Register/create view
      *
@@ -102,7 +106,7 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function show($id) {
+    public function show(Request $request, $id) {
         // check if user is logged in
 
         // check if authorized user is trying to view profile
@@ -114,8 +118,14 @@ class UserController extends Controller
         $movies = MovieUser::where('user_id', $user->id)->get();
         $this->data['user'] = $user;
         $this->data['shows'] = json_decode($shows);
+
         $this->data['movies'] = json_decode($movies);
-        // dd($this->data);
+        foreach ($this->data['movies'] as $movie) {
+            $movie->details = $this->getMovieById($request, $movie->movie_id)->object();
+        }
+        
+
+        dd($this->data);
         return view('users.profile', $this->data);
     }
 
