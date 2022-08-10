@@ -4,6 +4,8 @@
 
 	{{-- tailwindcss cdn script tag --}}
 	<script src="https://cdn.tailwindcss.com"></script>
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    @stack('head')
 </head>
 
 <body>
@@ -39,6 +41,6 @@
         
 	@yield('content')
 	
-	<script src="js/app.js"></script>	
+	<script src="../js/app.js"></script>	
 </body>
 </html>

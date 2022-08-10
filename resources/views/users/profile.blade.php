@@ -1,4 +1,7 @@
 @extends('layout')
+@push('head')
+
+@endpush
 
 @section('content')
 
@@ -34,5 +37,20 @@
         @endforeach
     </div>
 
+    <div class="mb-4">
+        <h2 class="mb-4">YER FOOKING SCHEDULE</h2>
+        {{-- calendar made from $dates --}}
+        @foreach ($dates as $name=>$type)
+            @php
+                dump($name, $type);
+            @endphp   
+            
+            @foreach ($type as $event)
+                <div>{{$name}} -> {{$event}}</div>                
+            @endforeach
+            
+        @endforeach
+
+    </div>
 </section>
 @endsection

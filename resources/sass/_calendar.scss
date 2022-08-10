@@ -1,0 +1,10 @@
+#calendar {
+    height: 300px;
+
+    .toastui-calendar-panel {
+            
+        &.toastui-calendar-milestone {
+            // display: none;
+        }
+    }
+}

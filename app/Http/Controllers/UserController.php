@@ -5,13 +5,14 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\ShowUser;
 use App\Models\MovieUser;
+use App\Traits\GetShowTrait;
+use App\Traits\GetMovieTrait;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Traits\GetMovieTrait;
 
 class UserController extends Controller
 {
-    use GetMovieTrait;
+    use GetMovieTrait, GetShowTrait;
 
     /**
      * Show the user Register/create view
@@ -107,25 +108,39 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show(Request $request, $id) {
-        // check if user is logged in
 
         // check if authorized user is trying to view profile
         if (!auth()->check() && auth()->user()->id != $id) {
             return back()->withErrors(['user' => 'You entered the wrong user ID! We sent you back to YOUR profile.']);
         }
+
         $user = auth()->user();
         $shows = ShowUser::where('user_id', $user->id)->get();
         $movies = MovieUser::where('user_id', $user->id)->get();
+        
         $this->data['user'] = $user;
+        
         $this->data['shows'] = json_decode($shows);
+        foreach ($this->data['shows'] as $show) {
+            $show->details = $this->getShowById($request, $show->show_id)->object();
+        }
 
         $this->data['movies'] = json_decode($movies);
         foreach ($this->data['movies'] as $movie) {
             $movie->details = $this->getMovieById($request, $movie->movie_id)->object();
         }
-        
 
-        dd($this->data);
+        // a collection of dates (movie release dates, tv show next episode dates, tv show previous episodes dates) group by date
+        // $this->data['datess'] = $this->getDates($this->data['shows'], $this->data['movies']);
+        
+        
+        $this->data['dates'] = [
+            'shows' => ["2022-08-02", "2022-08-05", "2022-08-05", "2022-08-12", "2022-08-15"],
+            'movies' => ["2022-08-03", "2022-08-06", "2022-08-06", "2022-08-13", "2022-08-16"],
+        ];
+
+
+        dump($this->data);
         return view('users.profile', $this->data);
     }
 
