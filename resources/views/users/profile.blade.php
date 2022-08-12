@@ -40,15 +40,8 @@
     <div class="mb-4">
         <h2 class="mb-4">YER FOOKING SCHEDULE</h2>
         {{-- calendar made from $dates --}}
-        @foreach ($dates as $name=>$type)
-            @php
-                dump($name, $type);
-            @endphp   
-            
-            @foreach ($type as $event)
-                <div>{{$name}} -> {{$event}}</div>                
-            @endforeach
-            
+        @foreach ($dates as $date)
+           <div>{{$date['date']}}</div>
         @endforeach
 
     </div>

@@ -131,17 +131,80 @@ class UserController extends Controller
         }
 
         // a collection of dates (movie release dates, tv show next episode dates, tv show previous episodes dates) group by date
-        // $this->data['datess'] = $this->getDates($this->data['shows'], $this->data['movies']);
         
+        $dates = [];
         
-        $this->data['dates'] = [
-            'shows' => ["2022-08-02", "2022-08-05", "2022-08-05", "2022-08-12", "2022-08-15"],
-            'movies' => ["2022-08-03", "2022-08-06", "2022-08-06", "2022-08-13", "2022-08-16"],
+        // temporary just to have a duplicate date
+        $dates[] = [
+            'date' => "2022-10-02",
+            'details' => [
+                'type' => 'show',
+                "ep_date" => "2022-10-02",
+                "ep_name" => "Episode 3h35",
+                "ep_num" => 153,
+                "ep_seas_num" => 3411,
+                "show_name" => "The Walkewvwtbting Dead",
+                "show_id" => "143452",
+                "show_image" => "/xf9wuDcqlUPWABZNeDKPbZUjWx0.jpg"
+            ]
         ];
 
+        foreach ($this->data['shows'] as $show) {
+            $next = $show->details->next_episode_to_air;
+            if (!$next) { continue; }
+            if ($this->checkDatePresence($dates, $next->air_date) === false) {
+                $dates[] = [
+                    'date' => $next->air_date,
+                    'details' => [
+                        'type' => 'show',
+                        'ep_date' => $next->air_date, 
+                        'ep_name' => $next->name, 
+                        'ep_num' => $next->episode_number, 
+                        'ep_seas_num' => $next->season_number, 
+                        'show_name' => $show->details->name, 
+                        'show_id' => $show->show_id, 
+                        'show_image' => $show->details->poster_path, 
+                    ]
+                ];
+            }
+        }
+        foreach ($this->data['movies'] as $movie) {
+            $release = $movie->details->release_date;
+            if ($release) {
+                $dates[] = [
+                    'date' => $release,
+                    'details' => [
+                        'type' => 'movie',
+                        'movie_release_date' => $release, 
+                        'movie_name' => $movie->details->title, 
+                        'movie_id' => $movie->movie_id, 
+                        'movie_image' => $movie->details->poster_path, 
+                    ]
+                ];
+            }
+        }
 
-        dump($this->data);
+        // $dates = array_unique($dates);
+        sort($dates);
+        $this->data['dates'] = $dates;
+
+        // dump($this->data);
         return view('users.profile', $this->data);
+    }
+
+    /**
+     * Check if dates array already contains the date
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function checkDatePresence($dates, $date) {
+        dump('fuck', $dates, $date, 'a duck');
+        foreach ($dates as $d) {
+            if ($d['date'] == $date) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
