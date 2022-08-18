@@ -5,17 +5,15 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Http as Client;
 use Illuminate\Http\Request;
 use stdClass;
+use App\Traits\GetShowTrait;
 
 class ShowController extends Controller
 {
+    use GetShowTrait;
+
     public function showShow(Request $request, $id) {
         
-        $key = $this->tmdbkey;
-        $client = new Client();
-        
-        $show = $client::get("https://api.themoviedb.org/3/tv/$id", [
-            'api_key' => $key,
-        ]);   
+        $show = $this->getShowById($request, $id);
 
         $result = new stdClass();
         $result->show = $show->object();
