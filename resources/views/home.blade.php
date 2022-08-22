@@ -4,41 +4,26 @@
 	
 <section class="container mx-auto p-4">
 
-	<h1 class="mb-4 text-primary text-xl">Entertainment calendar v0.1 || {{config('app.env')}}</h1>
-	
-	<div class="mb-4">
-		<ul>
-			<li>
-				- {{config('app.env')}}
-			</li>
-			<li>
-				- {{config('app.debug')}}
-			</li>
-		</ul>
-	</div>
-
 	@if(session()->has('message'))
-	<h1 class="text-green-400">{{session('message')}}</h1>
+	<h1 class="text-green-400 text-xl">{{session('message')}}</h1>
 	@endif
 	
-	
-	<div>Search for stuff:</div>
-	<form action="/" method="POST">
+	<form action="/" method="POST" class="h-16 flex justify-center">
 		@csrf
-		<input type="text" name="search_query" placeholder="Enter keywords" required>
-		<button type="submit">Search</button>
+		<input type="text" name="search_query" placeholder="Enter keywords" required class="border p-2 h-full">
+		<button type="submit" class="p-2 w-32 h-full text-lg bg-blue-200">Search</button>
 	</form>
 
 	@error('user_show')
-		<p class="text-red-500 text-xs mt-1">{{$message}}</p>
+		<p class="text-red-500 text-xl mt-1">{{$message}}</p>
 	@enderror
 	
 	@error('user_movie')
-		<p class="text-red-500 text-xs mt-1">{{$message}}</p>
+		<p class="text-red-500 text-xl mt-1">{{$message}}</p>
 	@enderror
 	
 	@if (isset($search_results))
-		<div style="display:flex;">
+		<div class="flex justify-center">
 			@if ($search_results->tv)
 			<div class="mr-4">
 				<h1>TV shows</h1>
@@ -71,9 +56,10 @@
 			</div>
 			@endif
 		</div>
-		@endif
-		
-		<div>{{ isset($search_msg) ? $search_msg : '' }}</div>
-		
-	</section>
+	@endif
+	
+	<div>{{ isset($search_msg) ? $search_msg : '' }}</div>
+	
+</section>
+
 @endsection

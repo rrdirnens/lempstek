@@ -21,20 +21,24 @@
 	
     <div class="mb-4">
         <h2 class="mb-4">MOVIES</h2>
-        @foreach ($movies as $movie)
-            <a class="mx-2 p-2 border hover:bg-red-200 inline block" href="{{route('users.movie.delete', $movie->movie_id)}}">
-                <strong>{{$movie->details->title}}</strong>
-            </a>
-        @endforeach
+        <div class="flex flex-wrap">
+            @foreach ($movies as $movie)
+                <a class="mx-2 mb-1 p-2 border hover:bg-red-200 flex" href="{{route('users.movie.delete', $movie->movie_id)}}">
+                    <strong>{{$movie->details->title}}</strong>
+                </a>
+            @endforeach
+        </div>
     </div>
 
     <div class="mb-4">
         <h2 class="mb-4">SHOWS</h2>
-        @foreach ($shows as $show)
-            <a class="mx-2 p-2 border hover:bg-red-200 inline-block" href="{{route('users.tv.delete', $show->show_id)}}">
-                <strong>{{$show->details->name}}</strong>
-            </a>
-        @endforeach
+        <div class="flex flex-wrap">
+            @foreach ($shows as $show)
+                <a class="mx-2 mb-1 p-2 border hover:bg-red-200 flex" href="{{route('users.tv.delete', $show->show_id)}}">
+                    <strong>{{$show->details->name}}</strong>
+                </a>
+            @endforeach
+        </div>
     </div>
 
     <div class="mb-4">
