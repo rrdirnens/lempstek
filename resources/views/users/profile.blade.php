@@ -23,7 +23,7 @@
         <h2 class="mb-4">MOVIES</h2>
         @foreach ($movies as $movie)
             <a class="mx-2 p-2 border hover:bg-red-200 inline block" href="{{route('users.movie.delete', $movie->movie_id)}}">
-                <strong>{{$movie->movie_id}}</strong>
+                <strong>{{$movie->details->title}}</strong>
             </a>
         @endforeach
     </div>
@@ -32,88 +32,49 @@
         <h2 class="mb-4">SHOWS</h2>
         @foreach ($shows as $show)
             <a class="mx-2 p-2 border hover:bg-red-200 inline-block" href="{{route('users.tv.delete', $show->show_id)}}">
-                <strong>{{$show->show_id}}</strong>
+                <strong>{{$show->details->name}}</strong>
             </a>
         @endforeach
     </div>
 
     <div class="mb-4">
-        <h2 class="mb-4">YER FOOKING SCHEDULE</h2>
-        {{-- calendar made from $dates --}}
-
+        <h2 class="mb-4">YER FOOKING SCHEDULE</h2>        
         <div class="flex overflow-x-auto">
             @foreach ($dates as $date => $items)
                 <div class="min-w-[20%] w-1/5 m-2 p-2 bg-blue-200">
-                    <div class="mb-2">{{$date}}</div>
+                    <div class="mb-2">{{$date}} @if ($items[0]['is_today']) | TODAY @endif</div>
+                    @if ($items[0]['days_left'] >= 0)
+                        <div> 
+                            {{ $items[0]['day'] }} ( {{$items[0]['days_left']}} days left ) 
+                        </div>
+                    @else 
+                        <div> 
+                            {{ $items[0]['day'] }} ( {{abs($items[0]['days_left'])}} days ago ) 
+                        </div>
+                    @endif
                     @foreach ($items as $item)
                         @if ($item['type'] == 'movie')
-                            <div class="font-bold">
+                            <div class="font-bold bg-red-200 mb-1">
                                 {{$item['name']}} <div class="font-normal">( {{$item['type']}} )</div> 
                             </div> 
                         @else
-                            <div class="font-bold">
-                                {{$item['show_name']}} 
-                                <div class="font-normal">( {{$item['type']}} )</div>
+                            <div class="bg-pink-400 mb-1">
+                                <div class="font-bold">
+                                    {{$item['show_name']}} 
+                                    <div class="font-normal">( {{$item['type']}} )</div>
+                                </div>
+                                <div>{{$item['name']}} 
+                                    @if (!empty($item['ep_number'])) 
+                                        / S{{$item['ep_season_number']}}E{{$item['ep_number']}} 
+                                    @endif
+                                </div>
                             </div>
-                            <div>{{$item['name']}} 
-                                @if (!empty($item['ep_number'])) 
-                                    / S{{$item['ep_season_number']}}E{{$item['ep_number']}} 
-                                @endif
-                            </div>
-                            
                         @endif
                     @endforeach
                     <br>
                 </div>
-            @endforeach    
-            @foreach ($dates as $date => $items)
-                <div class="min-w-[20%] w-1/5 m-2 p-2 bg-blue-200">
-                    <div class="mb-2">{{$date}}</div>
-                    @foreach ($items as $item)
-                        @if ($item['type'] == 'movie')
-                            <div class="font-bold">
-                                {{$item['name']}} <div class="font-normal">( {{$item['type']}} )</div> 
-                            </div> 
-                        @else
-                            <div class="font-bold">
-                                {{$item['show_name']}} 
-                                <div class="font-normal">( {{$item['type']}} )</div>
-                            </div>
-                            <div>{{$item['name']}} 
-                                @if (!empty($item['ep_number'])) 
-                                    / S{{$item['ep_season_number']}}E{{$item['ep_number']}} 
-                                @endif
-                            </div>
-                            
-                        @endif
-                    @endforeach
-                    <br>
-                </div>
-            @endforeach    
-        </div>
-
-
-        @foreach ($dates as $date => $items)
-            <br>
-            <div>{{$date}}</div>
-            @foreach ($items as $item)
-                @if ($item['type'] == 'movie')
-                
-                Name: {{$item['name']}} ( {{$item['type']}} ) 
-                    
-                @else
-                
-                Name: {{$item['show_name']}} ( {{$item['type']}} )
-                Episode name: {{$item['name']}}
-                @if (!empty($item['ep_number'])) 
-                    s{{$item['ep_season_number']}}e{{$item['ep_number']}} 
-                @endif
-                    
-                @endif
             @endforeach
-            <br>
-        @endforeach
-
+        </div>
     </div>
 </section>
 @endsection

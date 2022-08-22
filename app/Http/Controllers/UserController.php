@@ -31,25 +31,20 @@ class UserController extends Controller
      */
     public function store(Request $request) {
 
-        // Validate the request
         $formFields = $this->validate($request, [
             'name' => 'required|max:255|min:4',
             'email' => 'required|email|max:255|unique:users',
             'password' => 'required|min:6|confirmed',
         ]);
 
-        // Hash PW
         $formFields['password'] = bcrypt($formFields['password']);
 
-        // Create a new user
         $user = new User;
         $user->fill($formFields);
         $user->save();
 
-        // login
         auth()->login($user);
 
-        // Redirect to home page
         return redirect('/')->with('message', 'You are now logged in!');
     }
 
@@ -70,13 +65,11 @@ class UserController extends Controller
      */
     public function authenticate(Request $request) {
 
-        // Validate the request
         $formFields = $this->validate($request, [
             'email' => 'required|email',
             'password' => 'required',
         ]);
 
-        // Attempt to login
         if (auth()->attempt($formFields)) {
             $request->session()->regenerate();
             return redirect('/')->with('message', 'You are now logged in!');
@@ -93,10 +86,8 @@ class UserController extends Controller
     public function logout(Request $request) {
         auth()->logout();
 
-        // invalidate session
         $request->session()->invalidate();
 
-        //regenerate token  
         $request->session()->regenerateToken();
 
         return redirect('/')->with('message', 'You are now logged out!');
@@ -109,7 +100,6 @@ class UserController extends Controller
      */
     public function show(Request $request, $id) {
 
-        // check if authorized user is trying to view profile
         if (!auth()->check() && auth()->user()->id != $id) {
             return back()->withErrors(['user' => 'You entered the wrong user ID! We sent you back to YOUR profile.']);
         }
@@ -129,36 +119,9 @@ class UserController extends Controller
         foreach ($this->data['movies'] as $movie) {
             $movie->details = $this->getMovieById($request, $movie->movie_id)->object();
         }
-
-        // a collection of dates (movie release dates, tv show next episode dates, tv show previous episodes dates) group by date
         
         $dates = [];
         
-        // temporary just to have a duplicate date
-        // $dates[] =
-        //     [
-        //         'type' => 'show',
-        //         "date" => "2022-10-02",
-        //         "name" => "Episode name 4",
-        //         "ep_number" => 4,
-        //         "ep_season_number" => 6,
-        //         "show_name" => "The Walkewvwtbting Dead",
-        //         "id" => "143452",
-        //         "image" => "/xf9wuDcqlUPWABZNeDKPbZUjWx0.jpg"
-        //     ];
-
-        // $dates[] =
-        //     [
-        //         'type' => 'show',
-        //         "date" => "2022-07-17",
-        //         "name" => "Episode name 13",
-        //         "ep_number" => 13,
-        //         "ep_season_number" => 1,
-        //         "show_name" => "The fuckface show",
-        //         "id" => "1453",
-        //         "image" => "/xf9wuDcqlUPWABZNeDKPbZUjWx0.jpg"
-        //     ];
-
         foreach ($this->data['shows'] as $show) {
             $next = $show->details->next_episode_to_air;
             if (!$next) { continue; }
@@ -173,7 +136,7 @@ class UserController extends Controller
                 'image' => $show->details->poster_path, 
             ];
         }
-
+        
         foreach ($this->data['movies'] as $movie) {
             $release = $movie->details->release_date;
             if ($release) {
@@ -188,16 +151,60 @@ class UserController extends Controller
         }
 
         $dates = collect($dates)->sortBy('date')->groupBy('date');
+        
+        foreach ($dates as $date => $details) {
+            // add what day of week each date is
+            $day = date('l', strtotime($date));
+            $dates[$date] = collect($details)->map(function($detail) use ($day) {
+                $detail['day'] = $day;
+                // dd($detail);
+                return $detail;
+            }); 
+            
+            // calculate how many days left until each date
+            $daysLeft = $this->daysLeft($date);
+            $dates[$date] = collect($dates[$date])->map(function($detail) use ($daysLeft) {
+                $detail['days_left'] = $daysLeft;
+                return $detail;
+            }); 
+
+        }
+
+        // $dates items keys are actual dates (YYYY-MM-DD) and values are arrays of show/movie details. Remove dates which are older than 1 week.
+        $dates = collect($dates)->filter(function($details, $date) {
+            return $this->daysLeft($date) >= -14;
+        });
+
+        // indicate which date is the current date
+        $dates = $dates->map(function($details, $date) {
+            $details = collect($details)->map(function($detail) use ($date) {
+                $detail['is_today'] = $date == date('Y-m-d');
+                return $detail;
+            });
+            return $details;
+        });
+        
         $this->data['dates'] = $dates;
 
-        // $dates = array_unique($dates);
-        // sort($dates);
-        // $this->data['dates'] = $dates;
-
-        // dump($this->data);
+        // dump($this->data, $dates);
+        
         return view('users.profile', $this->data);
     }
 
+    /**
+     * Calculate how many days left until a date
+     *
+     * @param  string  $date
+     * @return int
+     */
+
+    public function daysLeft($date) {
+        $today = date('Y-m-d');
+        $diff = date_diff(date_create($today), date_create($date));
+        if ($today > $date) return - $diff->days;
+        return $diff->days;
+    }
+    
     /**
      * Add TV show to user
      *
@@ -206,8 +213,14 @@ class UserController extends Controller
      */
     public function addTvShow(Request $request, $id) {
         $user = auth()->user();
-        $show= $id;
+        $show = $id;
         
+        $showRequest = $this->getShowById($request, $show);
+
+        if ($showRequest->status() !== 200) {
+            return back()->withErrors(['user_show' => 'Show not found!']);
+        }
+    
         // new user show entry to the join table for user shows
         $userShow = new ShowUser;
         $userShow->user_id = $user->id;
@@ -251,12 +264,16 @@ class UserController extends Controller
         $user = auth()->user();
         $movie= $id;
         
-        // new user movie entry to the join table for user movies
+        $movieRequest = $this->getMovieById($request, $movie);
+
+        if ($movieRequest->status() !== 200) {
+            return back()->withErrors(['user_movie' => 'Movie not found!']);
+        }
+
         $userMovie = new MovieUser;
         $userMovie->user_id = $user->id;
         $userMovie->movie_id = $movie;
         
-        // check for duplicate entries
         $duplicate = movieUser::where('user_id', $user->id)->where('movie_id', $movie)->first();
         
         if ($duplicate) {
