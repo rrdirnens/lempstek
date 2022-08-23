@@ -7,7 +7,7 @@
 
 <section class="container mx-auto p-4">
 
-    <h1>Hi, {{$user->name}} (id: {{$user->id}})</h1>
+    <h1 class="text-xl">Hi, {{$user->name}} </h1>
     
     <br>
 
@@ -23,9 +23,16 @@
         <h2 class="mb-4">MOVIES</h2>
         <div class="flex flex-wrap">
             @foreach ($movies as $movie)
-                <a class="mx-2 mb-1 p-2 border hover:bg-red-200 flex" href="{{route('users.movie.delete', $movie->movie_id)}}">
-                    <strong>{{$movie->details->title}}</strong>
-                </a>
+                <div class="item-button">
+                    <div class="item-button__container">
+                        {{$movie->details->title}}
+                    </div>
+                    <div class="item-button__overlay">
+                        <a class="item-button__action item-button__action--view" href="{{route('movies.show', $movie->movie_id)}}">View</a>
+                        <div class="item-button__divider">|</div>
+                        <a class="item-button__action item-button__action--remove" href="{{route('users.movie.delete', $movie->movie_id)}}">Remove</a>
+                    </div>
+                </div>
             @endforeach
         </div>
     </div>
@@ -34,9 +41,16 @@
         <h2 class="mb-4">SHOWS</h2>
         <div class="flex flex-wrap">
             @foreach ($shows as $show)
-                <a class="mx-2 mb-1 p-2 border hover:bg-red-200 flex" href="{{route('users.tv.delete', $show->show_id)}}">
-                    <strong>{{$show->details->name}}</strong>
-                </a>
+                <div class="item-button">
+                    <div class="item-button__container">
+                        {{$show->details->name}}
+                    </div>
+                    <div class="item-button__overlay">
+                        <a class="item-button__action item-button__action--view" href="{{route('shows.show', $show->show_id)}}">View</a>
+                        <div class="item-button__divider">|</div>
+                        <a class="item-button__action item-button__action--remove" href="{{route('users.tv.delete', $show->show_id)}}">Remove</a>
+                    </div>
+                </div>
             @endforeach
         </div>
     </div>

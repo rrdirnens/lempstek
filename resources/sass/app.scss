@@ -1,2 +1,5 @@
-// import calendar stylesheet
-@import "calendar";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import "item-button";

@@ -1,0 +1,43 @@
+.item-button {
+    @apply mx-2 mb-1 flex text-center justify-center items-center;
+    position: relative;
+
+    .item-button__container {
+        @apply font-bold p-2 border hover:bg-red-200 flex text-center justify-center items-center;
+        min-width: 140px;
+    
+    }
+    .item-button__overlay {
+        @apply flex text-center justify-center items-center;
+        background: #000;
+        position: absolute;
+        width: 0;
+        height: 0;
+        overflow: hidden;
+    }
+
+    .item-button__divider {
+        @apply mx-2;
+    }
+
+    .item-button__action {
+
+    }
+
+    .item-button__action--remove:hover {
+        @apply text-red-200;
+    }
+   
+    .item-button__action--view:hover {
+        @apply text-blue-200;
+    }
+    
+    &:hover {
+     
+        .item-button__overlay {
+            width: 100%;
+            height: 100%;
+            color: #fff;
+        }
+    }
+}

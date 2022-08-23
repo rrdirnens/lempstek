@@ -2,8 +2,6 @@
 <head>
 	<title>Entertainment calendar v0.1</title>
 
-	{{-- tailwindcss cdn script tag --}}
-	<script src="https://cdn.tailwindcss.com"></script>
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     @stack('head')
 </head>
