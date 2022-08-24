@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Http as Client;
 
 trait GetShowTrait
 {
-    public function getShowById($request, $id)
+    public function getShowById($id)
     {
         $key = $this->tmdbkey;
         $client = new Client();

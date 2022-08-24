@@ -6,9 +6,6 @@
 <section class="container mx-auto p-4">
 
     @if (isset($show))
-        @php
-            // dd($show);
-        @endphp
 
         <p class="text-xl mb-2">Title: {{$show['original_name']}}</p>
         <p class="mb-4">Release date : {{$show['first_air_date']}}</p>

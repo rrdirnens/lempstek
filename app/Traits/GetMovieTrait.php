@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Http as Client;
 
 trait GetMovieTrait
 {
-    public function getMovieById($request, $id)
+    public function getMovieById($id)
     {
         $key = $this->tmdbkey;
         $client = new Client();

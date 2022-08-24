@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Http as Client;
-use Illuminate\Http\Request;
 use stdClass;
 use App\Traits\GetShowTrait;
 
@@ -11,15 +9,15 @@ class ShowController extends Controller
 {
     use GetShowTrait;
 
-    public function showShow(Request $request, $id) {
+    public function showShow($id) {
         
-        $show = $this->getShowById($request, $id);
+        $show = $this->getShowById($id);
 
         $result = new stdClass();
         $result->show = $show->object();
 
         // show how many days left until next episode
-        $next_episode = $result->show->next_episode_to_air;
+        $next_episode = $result->show->next_episode_to_air ?? null;
         if($next_episode != null) {
             $next_episode_date = new \DateTime($next_episode->air_date);
             $today = new \DateTime();

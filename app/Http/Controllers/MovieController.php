@@ -11,9 +11,9 @@ class MovieController extends Controller
 {
     use GetMovieTrait;
 
-    public function showMovie(Request $request, $id) {
+    public function showMovie($id) {
 
-        $movie = $this->getMovieById($request, $id);
+        $movie = $this->getMovieById($id);
 
         // TODO: check if movie exists
 
