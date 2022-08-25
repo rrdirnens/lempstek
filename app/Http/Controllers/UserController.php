@@ -137,23 +137,20 @@ class UserController extends Controller
         if ($showRequest->status() !== 200) {
             return back()->withErrors(['user_show' => 'Show not found!']);
         }
-    
+
+        // check for duplicate entries
+        $duplicate = ShowUser::where('user_id', $user->id)->where('show_id', $show)->first();
+        if ($duplicate) {
+            return back()->withErrors(['user_show' => 'You already have this show in your list!']);
+        }
+
         // new user show entry to the join table for user shows
         $userShow = new ShowUser;
         $userShow->user_id = $user->id;
         $userShow->show_id = $show;
-        
-        // check for duplicate entries
-        $duplicate = ShowUser::where('user_id', $user->id)->where('show_id', $show)->first();
-        
-        if ($duplicate) {
-            return back()->withErrors(['user_show' => 'You already have this show!']);
-        } else {
-            $userShow->save();
-            return back()->with('message', 'Show added!');
-        }
+        $userShow->save();
 
-        return redirect('/')->with('message', 'TV show added!');
+        return redirect('/')->with('message', 'Show added!');
     }
     /**
      * Remove TV show from user
@@ -184,19 +181,19 @@ class UserController extends Controller
         if ($movieRequest->status() !== 200) {
             return back()->withErrors(['user_movie' => 'Movie not found!']);
         }
+        
+        // check for duplicate entries
+        $duplicate = movieUser::where('user_id', $user->id)->where('movie_id', $movie)->first();
 
+        if ($duplicate) {
+            return back()->withErrors(['user_movie' => 'You already have this movie in your list!']);
+        }
+
+        // new user movie entry to the join table for user movies 
         $userMovie = new MovieUser;
         $userMovie->user_id = $user->id;
         $userMovie->movie_id = $movie;
-        
-        $duplicate = movieUser::where('user_id', $user->id)->where('movie_id', $movie)->first();
-        
-        if ($duplicate) {
-            return back()->withErrors(['user_movie' => 'You already have this movie!']);
-        } else {
-            $userMovie->save();
-            return back()->with('message', 'Movie added!');
-        }
+        $userMovie->save();
 
         return redirect('/')->with('message', 'Movie added!');
     }
