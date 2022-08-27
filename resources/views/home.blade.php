@@ -14,6 +14,17 @@
 		<button type="submit" class="p-2 w-32 h-full text-lg bg-blue-200">Search</button>
 	</form>
 
+	@isset($search_results)
+		{{-- pagination POST method form to / --}}
+		<form action="/" method="POST" class="flex justify-center">
+			@csrf
+			@for ($i = 0; $i < $search_pagination_total; $i++)
+				<button type="submit" name="page" value="{{$i+1}}" class="p-2 w-32 h-full text-lg {{$search_pagination_current == $i+1 ? 'bg-blue-400' : 'bg-blue-200'}}">{{$i+1}}</button>
+			@endfor
+			<input type="text" name="search_query" class="hidden" value="{{$search_query}}">
+		</form>
+	@endisset
+
 	@error('user_show')
 		<p class="text-red-500 text-xl mt-1">{{$message}}</p>
 	@enderror
@@ -34,7 +45,7 @@
 				@foreach ($search_results->tv as $item)
 					<div class="border p-2 mb-1">
 
-						@if ($item->in_calendar)
+						@if (isset($item->in_calendar) && $item->in_calendar)
 							<a href="{{route('users.tv.delete', $item->id)}}" class="inline-block mb-2 hover:text-red-900 text-red-500">REMOVE</a>
 						@else
 							<a href="{{route('users.tv.store', $item->id)}}" class="inline-block mb-2 hover:text-green-900">Add to calendar</a>
@@ -53,7 +64,7 @@
 				<h1>Movies</h1>
 				@foreach ($search_results->movies as $item)
 					<div class="border p-2 mb-1">
-						@if ($item->in_calendar)
+						@if (isset($item->in_calendar) && $item->in_calendar)
 							<a href="{{route('users.movie.delete', $item->id)}}" class="inline-block mb-2 hover:text-red-900 text-red-500">REMOVE</a>
 						@else
 							<a href="{{route('users.movie.store', $item->id)}}" class="inline-block mb-2 hover:text-green-900">Add to calendar</a>

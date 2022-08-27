@@ -21,7 +21,10 @@ use App\Http\Controllers\MovieController;
 */
 
 Route::get('/', [Controller::class, 'home'])->name('home');
+// search route
 Route::post('/', [Controller::class, 'entertainmentSearch']);
+// search route with optional page parameter
+// Route::post('/{page}', [Controller::class, 'entertainmentSearch']);
 
 /*
 |--------------------------------------------------------------------------

@@ -24,8 +24,22 @@ class Controller extends BaseController
         $this->tmdbkey = config('tmdb.key') ?? null;
     }
 
-    public function home(Request $request) {
+    public function getBasicUserData() {
         $this->data['logged_in'] = auth()->check();
+
+        if (!$this->data['logged_in']) return;
+        if (isset($this->data['shows'])) return; 
+        $user = auth()->user();
+        $shows = ShowUser::where('user_id', $user->id)->get();
+        $movies = MovieUser::where('user_id', $user->id)->get();
+
+        $this->data['user'] = $user;
+        $this->data['shows'] = $shows;
+        $this->data['movies'] = $movies;
+    }
+
+    public function home(Request $request) {
+        $this->getBasicUserData();
 
         // if logged in, also add items and dates
         if ($this->data['logged_in']) {
@@ -33,20 +47,28 @@ class Controller extends BaseController
             $this->data['dates'] = $this->getUserDates($request);
         }
 
+
         return view('home', $this->data);
     }
 
     public function entertainmentSearch (Request $request) {
+        $this->getBasicUserData();
         $query = $request->input('search_query');
+        $page = $request->input('page') ?? 1;
 
         $tvSearch = Client::get('https://api.themoviedb.org/3/search/tv', [
             'api_key' => $this->tmdbkey,
             'query' => $query,
+            'page' => $page,
         ]);
         $movieSearch = Client::get('https://api.themoviedb.org/3/search/movie', [
             'api_key' => $this->tmdbkey,
             'query' => $query,
+            'page' => $page,
         ]);
+
+        // compare tvSearch and movieSearch total_pages and assign the biggest value to $totalPages
+        $totalPages = $tvSearch->object()->total_pages > $movieSearch->object()->total_pages ? $tvSearch->object()->total_pages : $movieSearch->object()->total_pages;
 
         $results = new stdClass();
         $results->tv = $tvSearch->object()->results;
@@ -58,9 +80,15 @@ class Controller extends BaseController
         } else {
             $this->data['search_results'] = $results;
             $this->data['search_msg'] = '';
+            $this->data['search_pagination_total'] = $totalPages;
+            $this->data['search_pagination_current'] = $page;
         } 
+        $this->data['search_query'] = $query;
 
-        $this->editSearchResultsBasedOnUserCalendar($this->data['search_results']);
+        // dd($this->data);
+        if ($this->data['logged_in']) {
+            $this->editSearchResultsBasedOnUserCalendar($this->data['search_results']);
+        }
 
         return $this->home($request, $this->data);
     }
@@ -72,13 +100,10 @@ class Controller extends BaseController
         if (empty($search_results)) {
             return;
         }
-        $user = auth()->user();
-        $shows = ShowUser::where('user_id', $user->id)->get();
-        $movies = MovieUser::where('user_id', $user->id)->get();
-
+        
         foreach ($search_results->tv as $show) {
             $show->in_calendar = false;
-            foreach ($shows as $show_user) {
+            foreach ($this->data['shows'] as $show_user) {
                 if ($show_user->show_id == $show->id) {
                     $show->in_calendar = true;
                     break;
@@ -87,7 +112,7 @@ class Controller extends BaseController
         }
         foreach ($search_results->movies as $movie) {
             $movie->in_calendar = false;
-            foreach ($movies as $movie_user) {
+            foreach ($this->data['movies'] as $movie_user) {
                 if ($movie_user->movie_id == $movie->id) {
                     $movie->in_calendar = true;
                     break;
@@ -98,18 +123,13 @@ class Controller extends BaseController
     }
 
     public function getUserItems() {
-        $user = auth()->user();
-        $shows = ShowUser::where('user_id', $user->id)->get();
-        $movies = MovieUser::where('user_id', $user->id)->get();
         
-        $this->data['user'] = $user;
-        
-        $this->data['shows'] = json_decode($shows);
+        $this->data['shows'] = json_decode($this->data['shows']);
         foreach ($this->data['shows'] as $show) {
             $show->details = $this->getShowById($show->show_id)->object();
         }
 
-        $this->data['movies'] = json_decode($movies);
+        $this->data['movies'] = json_decode($this->data['movies']);
         foreach ($this->data['movies'] as $movie) {
             $movie->details = $this->getMovieById($movie->movie_id)->object();
         }
