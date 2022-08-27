@@ -24,7 +24,7 @@ class Controller extends BaseController
         $this->tmdbkey = config('tmdb.key') ?? null;
     }
 
-    public function home(Request $request, $data = null) {
+    public function home(Request $request) {
         $this->data['logged_in'] = auth()->check();
 
         // if logged in, also add items and dates
@@ -59,8 +59,42 @@ class Controller extends BaseController
             $this->data['search_results'] = $results;
             $this->data['search_msg'] = '';
         } 
-        
+
+        $this->editSearchResultsBasedOnUserCalendar($this->data['search_results']);
+
         return $this->home($request, $this->data);
+    }
+
+    /**
+     * Edit search results based on user calendar
+     */
+    private function editSearchResultsBasedOnUserCalendar($search_results) {
+        if (empty($search_results)) {
+            return;
+        }
+        $user = auth()->user();
+        $shows = ShowUser::where('user_id', $user->id)->get();
+        $movies = MovieUser::where('user_id', $user->id)->get();
+
+        foreach ($search_results->tv as $show) {
+            $show->in_calendar = false;
+            foreach ($shows as $show_user) {
+                if ($show_user->show_id == $show->id) {
+                    $show->in_calendar = true;
+                    break;
+                }
+            }
+        }
+        foreach ($search_results->movies as $movie) {
+            $movie->in_calendar = false;
+            foreach ($movies as $movie_user) {
+                if ($movie_user->movie_id == $movie->id) {
+                    $movie->in_calendar = true;
+                    break;
+                }
+            }
+        }
+        return $search_results;
     }
 
     public function getUserItems() {

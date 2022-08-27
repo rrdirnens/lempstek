@@ -34,7 +34,11 @@
 				@foreach ($search_results->tv as $item)
 					<div class="border p-2 mb-1">
 
-						<a href="{{route('users.tv.store', $item->id)}}" class="inline-block mb-2 hover:text-green-900">Add to calendar</a>
+						@if ($item->in_calendar)
+							<a href="{{route('users.tv.delete', $item->id)}}" class="inline-block mb-2 hover:text-red-900 text-red-500">REMOVE</a>
+						@else
+							<a href="{{route('users.tv.store', $item->id)}}" class="inline-block mb-2 hover:text-green-900">Add to calendar</a>
+						@endif
 						<a href="{{route('shows.show', $item->id)}}">
 							<div>
 								<strong>{{$item->name}}</strong>
@@ -49,7 +53,11 @@
 				<h1>Movies</h1>
 				@foreach ($search_results->movies as $item)
 					<div class="border p-2 mb-1">
-						<a href="{{route('users.movie.store', $item->id)}}" class="inline-block mb-2 hover:text-green-900">Add to calendar</a>
+						@if ($item->in_calendar)
+							<a href="{{route('users.movie.delete', $item->id)}}" class="inline-block mb-2 hover:text-red-900 text-red-500">REMOVE</a>
+						@else
+							<a href="{{route('users.movie.store', $item->id)}}" class="inline-block mb-2 hover:text-green-900">Add to calendar</a>
+						@endif
 						<a href="{{route('movies.show', $item->id)}}">
 							<div>
 								<strong>{{$item->title}}</strong>
@@ -114,8 +122,8 @@
 				@if (isset($dates) && $dates)
 					
 				@foreach ($dates as $date => $items)
-					<div class="min-w-[20%] w-1/5 m-2 p-2 bg-blue-200">
-						<div class="mb-2">{{$date}} @if ($items[0]['is_today']) | TODAY @endif</div>
+					<div class="min-w-[20%] w-1/5 m-2 p-2 {{ $items[0]['is_today'] ?'bg-blue-400' : 'bg-blue-200' }}">
+						<div class="mb-2">{{$date}} @if ($items[0]['is_today']) | <span class="font-bold">TODAY</span> @endif</div>
 						@if ($items[0]['days_left'] >= 0)
 						<div> 
 							{{ $items[0]['day'] }} ( {{$items[0]['days_left']}} days left ) 
