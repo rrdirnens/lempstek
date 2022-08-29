@@ -27,7 +27,7 @@ rm -rf node_modules
 npm install
 
 # Compile npm assets
-npm run prod
+# npm run prod
 
 # Run database migrations
 php artisan migrate --force
