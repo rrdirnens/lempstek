@@ -20,11 +20,12 @@ use App\Http\Controllers\MovieController;
 | destroy - delete one
 */
 
+// home route
 Route::get('/', [Controller::class, 'home'])->name('home');
+
 // search route
-Route::post('/', [Controller::class, 'entertainmentSearch']);
-// search route with optional page parameter
-// Route::post('/{page}', [Controller::class, 'entertainmentSearch']);
+Route::get('/search', [Controller::class, 'entertainmentSearch'])->name('search');
+
 
 /*
 |--------------------------------------------------------------------------
@@ -51,13 +52,13 @@ Route::post('/logout', [UserController::class, 'logout'])->name('logout');
 Route::get('/user-tv/{id}', [UserController::class, 'addTvShow'])->name('users.tv.store')->middleware('auth');
 
 // Remove TV show from user
-Route::get('/user-tv/{id}/delete', [UserController::class, 'removeTvShow'])->name('users.tv.delete');
+Route::get('/user-tv/{id}/delete', [UserController::class, 'removeTvShow'])->name('users.tv.delete')->middleware('auth');
 
 // Add movie to user
 Route::get('/user-movie/{id}', [UserController::class, 'addMovie'])->name('users.movie.store')->middleware('auth');
 
 // Remove movie from user
-Route::get('/user-movie/{id}/delete', [UserController::class, 'removeMovie'])->name('users.movie.delete');
+Route::get('/user-movie/{id}/delete', [UserController::class, 'removeMovie'])->name('users.movie.delete')->middleware('auth');
 
 // Show user's TV shows
 

@@ -8,15 +8,14 @@
 	<h1 class="text-green-400 text-xl">{{session('message')}}</h1>
 	@endif
 	
-	<form action="/" method="POST" class="h-16 flex justify-center">
+	<form action="{{ route('search') }}" method="GET" class="h-16 flex justify-center">
 		@csrf
 		<input type="text" name="search_query" placeholder="Enter keywords" required class="border p-2 h-full">
 		<button type="submit" class="p-2 w-32 h-full text-lg bg-blue-200">Search</button>
 	</form>
 
 	@isset($search_results)
-		{{-- pagination POST method form to / --}}
-		<form action="/" method="POST" class="flex justify-center">
+		<form action="{{ route('search') }}" method="GET" class="flex justify-center">
 			@csrf
 			@for ($i = 0; $i < $search_pagination_total; $i++)
 				<button type="submit" name="page" value="{{$i+1}}" class="p-2 w-32 h-full text-lg {{$search_pagination_current == $i+1 ? 'bg-blue-400' : 'bg-blue-200'}}">{{$i+1}}</button>
@@ -36,7 +35,7 @@
 	@error('user')
 		<p class="text-red-500 text-xs mt-1">{{$message}}</p>
 	@enderror
-	
+
 	@if (isset($search_results))
 		<div class="flex justify-center">
 			@if ($search_results->tv)
@@ -94,12 +93,12 @@
 					@foreach ($movies as $movie)
 					<div class="item-button">
 						<div class="item-button__container">
-							{{$movie->details->title}}
+							{{$movie['title']}}
 						</div>
 						<div class="item-button__overlay">
-							<a class="item-button__action item-button__action--view" href="{{route('movies.show', $movie->movie_id)}}">View</a>
+							<a class="item-button__action item-button__action--view" href="{{route('movies.show', $movie['id'])}}">View</a>
 							<div class="item-button__divider">|</div>
-							<a class="item-button__action item-button__action--remove" href="{{route('users.movie.delete', $movie->movie_id)}}">Remove</a>
+							<a class="item-button__action item-button__action--remove" href="{{route('users.movie.delete', $movie['id'])}}">Remove</a>
 						</div>
 					</div>
 					@endforeach
@@ -114,12 +113,12 @@
 					@foreach ($shows as $show)
 						<div class="item-button">
 							<div class="item-button__container">
-								{{$show->details->name}}
+								{{$show['name']}}
 							</div>
 							<div class="item-button__overlay">
-								<a class="item-button__action item-button__action--view" href="{{route('shows.show', $show->show_id)}}">View</a>
+								<a class="item-button__action item-button__action--view" href="{{route('shows.show', $show['id'])}}">View</a>
 								<div class="item-button__divider">|</div>
-								<a class="item-button__action item-button__action--remove" href="{{route('users.tv.delete', $show->show_id)}}">Remove</a>
+								<a class="item-button__action item-button__action--remove" href="{{route('users.tv.delete', $show['id'])}}">Remove</a>
 							</div>
 						</div>
 					@endforeach

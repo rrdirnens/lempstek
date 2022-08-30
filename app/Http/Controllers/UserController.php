@@ -150,7 +150,7 @@ class UserController extends Controller
         $userShow->show_id = $show;
         $userShow->save();
 
-        return redirect('/')->with('message', 'Show added!');
+        return redirect()->back()->with('message', 'Show added!');
     }
     /**
      * Remove TV show from user
@@ -172,7 +172,7 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function addMovie($id) {
+    public function addMovie($id, Request $request) {
         $user = auth()->user();
         $movie= $id;
         
@@ -194,8 +194,8 @@ class UserController extends Controller
         $userMovie->user_id = $user->id;
         $userMovie->movie_id = $movie;
         $userMovie->save();
-
-        return redirect('/')->with('message', 'Movie added!');
+        
+        return redirect()->back()->with('message', 'Movie added!');
     }
 
     /**

@@ -47,7 +47,6 @@ class Controller extends BaseController
             $this->data['dates'] = $this->getUserDates($request);
         }
 
-
         return view('home', $this->data);
     }
 
@@ -84,13 +83,15 @@ class Controller extends BaseController
             $this->data['search_pagination_current'] = $page;
         } 
         $this->data['search_query'] = $query;
+        
+        // save search query in the session (used for search result persistence after adding/removing items)
+        $request->session()->put('search_query', $query);
 
-        // dd($this->data);
         if ($this->data['logged_in']) {
             $this->editSearchResultsBasedOnUserCalendar($this->data['search_results']);
         }
 
-        return $this->home($request, $this->data);
+        return $this->home($request, $this);
     }
 
     /**
@@ -125,43 +126,54 @@ class Controller extends BaseController
     public function getUserItems() {
         
         $this->data['shows'] = json_decode($this->data['shows']);
-        foreach ($this->data['shows'] as $show) {
-            $show->details = $this->getShowById($show->show_id)->object();
-        }
-
         $this->data['movies'] = json_decode($this->data['movies']);
-        foreach ($this->data['movies'] as $movie) {
-            $movie->details = $this->getMovieById($movie->movie_id)->object();
+        
+        $show_ids = [];
+        foreach ($this->data['shows'] as $show) {
+            // assign show id to an array
+            $show_ids[] = $show->show_id;
         }
+        $show_details = $this->getShowsByIds($show_ids);
+
+        $this->data['shows'] = $show_details;
+
+        $movie_ids = [];
+        foreach ($this->data['movies'] as $movie) {
+            // assign movie id to an array
+            $movie_ids[] = $movie->movie_id;
+        }
+        $movie_details = $this->getMoviesByIds($movie_ids);
+
+        $this->data['movies'] = $movie_details;
+
     }
 
     public function getUserDates() {
         $dates = [];
-        
         foreach ($this->data['shows'] as $show) {
-            $next = $show->details->next_episode_to_air;
+            $next = $show['next_episode_to_air'];
             if (!$next) { continue; }
             $dates[] = [
                 'type' => 'show',
-                'date' => $next->air_date, 
-                'name' => $next->name, 
-                'ep_number' => $next->episode_number, 
-                'ep_season_number' => $next->season_number, 
-                'show_name' => $show->details->name, 
-                'id' => $show->show_id, 
-                'image' => $show->details->poster_path, 
+                'date' => $next['air_date'], 
+                'name' => $next['name'], 
+                'ep_number' => $next['episode_number'], 
+                'ep_season_number' => $next['season_number'], 
+                'show_name' => $show['name'], 
+                'id' => $show['id'], 
+                'image' => $show['poster_path'], 
             ];
         }
         
         foreach ($this->data['movies'] as $movie) {
-            $release = $movie->details->release_date;
+            $release = $movie['release_date'];
             if ($release) {
                 $dates[] = [
                     'type' => 'movie',
                     'date' => $release,
-                    'name' => $movie->details->title, 
-                    'id' => $movie->movie_id, 
-                    'image' => $movie->details->poster_path, 
+                    'name' => $movie['title'], 
+                    'id' => $movie['id'], 
+                    'image' => $movie['poster_path'], 
                 ];
             }
         }

@@ -3,19 +3,29 @@
 namespace App\Traits;
 
 use Illuminate\Support\Facades\Http as Client;
+use Illuminate\Http\Client\Pool;
 
 trait GetShowTrait
 {
-    public function getShowById($id)
+    public function getShowsByIds($ids)
     {
         $key = $this->tmdbkey;
         $client = new Client();
+
+        $url = "https://api.themoviedb.org/3/tv/";
+
+        $responses = $client::pool(function (Pool $pool) use ($url, $ids, $key) {
+            foreach ($ids as $id) {
+                $pool->get($url . $id . "?api_key=" . $key);
+            }
+        });
+
+        $shows = [];
         
-        $show = $client::get("https://api.themoviedb.org/3/tv/$id", [
-            'api_key' => $key,
-        ]);   
-     
-        return $show;   
+        foreach ($responses as $response) {
+            $shows[] = $response->json();
+        }
+        return $shows;
      
     }
 }
