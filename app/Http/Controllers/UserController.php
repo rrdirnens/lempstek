@@ -6,9 +6,10 @@ use App\Models\User;
 use App\Models\ShowUser;
 use App\Models\MovieUser;
 use App\Traits\GetShowTrait;
-use App\Traits\GetMovieTrait;
 use Illuminate\Http\Request;
+use App\Traits\GetMovieTrait;
 use App\Http\Controllers\Controller;
+use Spatie\ResponseCache\Facades\ResponseCache;
 
 class UserController extends Controller
 {
@@ -134,7 +135,7 @@ class UserController extends Controller
         
         $showRequest = $this->getShowById($show);
 
-        if ($showRequest->status() !== 200) {
+        if ($showRequest->getStatusCode() !== 200) {
             return back()->withErrors(['user_show' => 'Show not found!']);
         }
 
@@ -150,6 +151,8 @@ class UserController extends Controller
         $userShow->show_id = $show;
         $userShow->save();
 
+        ResponseCache::clear();
+
         return redirect()->back()->with('message', 'Show added!');
     }
     /**
@@ -164,6 +167,8 @@ class UserController extends Controller
         $userShow = ShowUser::where('user_id', $user->id)->where('show_id', $id)->first();
         $userShow->delete();
         
+        ResponseCache::clear();
+
         return back()->with('message', 'Show removed!');
     }
 
@@ -178,7 +183,7 @@ class UserController extends Controller
         
         $movieRequest = $this->getMovieById($movie);
 
-        if ($movieRequest->status() !== 200) {
+        if ($movieRequest->getStatusCode() !== 200) {
             return back()->withErrors(['user_movie' => 'Movie not found!']);
         }
         
@@ -194,6 +199,8 @@ class UserController extends Controller
         $userMovie->user_id = $user->id;
         $userMovie->movie_id = $movie;
         $userMovie->save();
+
+        ResponseCache::clear();
         
         return redirect()->back()->with('message', 'Movie added!');
     }
@@ -209,7 +216,9 @@ class UserController extends Controller
         // delete user movie entry to the join table for user movies
         $userMovie = MovieUser::where('user_id', $user->id)->where('movie_id', $id)->first();
         $userMovie->delete();
-        
+
+        ResponseCache::clear();
+
         return back()->with('message', 'Movie removed!');
     }
 }
