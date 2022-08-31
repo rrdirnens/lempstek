@@ -3,20 +3,23 @@
 namespace App\Http\Controllers;
 
 use stdClass;
+use GuzzleHttp\Pool;
+use GuzzleHttp\Client;
+use Illuminate\Support\Facades\Http as RegClient;
 use App\Models\ShowUser;
 use App\Models\MovieUser;
-use App\Traits\GetShowTrait;
 use Illuminate\Http\Request;
-use App\Traits\GetMovieTrait;
+use GuzzleHttp\Psr7\Response;
+use Illuminate\Database\Console\DumpCommand;
 use Illuminate\Foundation\Bus\DispatchesJobs;
-use Illuminate\Support\Facades\Http as Client;
 use Illuminate\Routing\Controller as BaseController;
+use GuzzleHttp\Exception\RequestException as Exception;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class Controller extends BaseController
 {
-    use AuthorizesRequests, DispatchesJobs, ValidatesRequests, GetShowTrait, GetMovieTrait;
+    use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
     protected $tmdbkey;
 
@@ -55,12 +58,12 @@ class Controller extends BaseController
         $query = $request->input('search_query');
         $page = $request->input('page') ?? 1;
 
-        $tvSearch = Client::get('https://api.themoviedb.org/3/search/tv', [
+        $tvSearch = RegClient::get('https://api.themoviedb.org/3/search/tv', [
             'api_key' => $this->tmdbkey,
             'query' => $query,
             'page' => $page,
         ]);
-        $movieSearch = Client::get('https://api.themoviedb.org/3/search/movie', [
+        $movieSearch = RegClient::get('https://api.themoviedb.org/3/search/movie', [
             'api_key' => $this->tmdbkey,
             'query' => $query,
             'page' => $page,
@@ -227,5 +230,96 @@ class Controller extends BaseController
         $diff = date_diff(date_create($today), date_create($date));
         if ($today > $date) return - $diff->days;
         return $diff->days;
+    }
+
+    public function getMoviesByIds($ids)
+    {
+        $key = $this->tmdbkey;
+        $url = "https://api.themoviedb.org/3/movie/";
+        $client = new Client(['base_uri' => $url]);
+        $movies = [];
+
+        $requestGenerator = function ($ids) use ($client, $key) {
+            foreach ($ids as $id) {
+                yield $id => function () use ($client, $id, $key) {
+                    return $client->getAsync("{$id}?api_key={$key}");
+                };
+            }
+        };
+
+        $pool = new Pool($client, $requestGenerator($ids), [
+            // this is a trial-error number, you can change it to whatever you want, but check the actual request times
+            'concurrency' => 3,
+            'fulfilled' => function (Response $response, $index) use (&$movies) {
+                $data = json_decode((string)$response->getBody(), true);
+                $movies[] = $data;
+
+            },
+            'rejected' => function (Exception $reason, $index) {
+                // this is delivered each failed request
+                echo "Requested search term: ", $index, "\n";
+                echo $reason->getMessage(), "\n\n";
+            },
+        ]);
+        $promise = $pool->promise();
+        $promise->wait();
+        
+        return $movies;
+    }
+
+    public function getMovieById($id)
+    {
+        $key = $this->tmdbkey;
+        $url = "https://api.themoviedb.org/3/movie/";
+        $client = new Client(['base_uri' => $url]);
+        
+        $movie = $client->get("{$id}?api_key={$key}");
+     
+        return $movie;
+    }
+
+    public function getShowsByIds($ids)
+    {
+        $key = $this->tmdbkey;
+        $url = "https://api.themoviedb.org/3/tv/";
+        $client = new Client(['base_uri' => $url]);
+        $shows = [];
+
+        $requestGenerator = function ($ids) use ($client, $key) {
+            foreach ($ids as $id) {
+                yield $id => function () use ($client, $id, $key) {
+                    return $client->getAsync("{$id}?api_key={$key}");
+                };
+            }
+        };
+
+        $pool = new Pool($client, $requestGenerator($ids), [
+            // this is a trial-error number, you can change it to whatever you want, but check the actual request times
+            'concurrency' => 3,
+            'fulfilled' => function (Response $response, $index) use (&$shows) {
+                $data = json_decode((string)$response->getBody(), true);
+                $shows[] = $data;
+            },
+            'rejected' => function ($reason, $index) {
+                // this is delivered each failed request
+                report($reason);
+                return back()->with('message', 'Something went wrong when looking for your shows. Try again later or contact me.');
+            },
+        ]);
+        $promise = $pool->promise();
+        $promise->wait();
+        
+        return $shows;
+    }
+
+    public function getShowById($id)
+    {
+        $key = $this->tmdbkey;
+        $url = "https://api.themoviedb.org/3/tv/";
+        $client = new Client(['base_uri' => $url]);
+        
+        $show = $client->get("{$id}?api_key={$key}");
+     
+        return $show;
     }
 }

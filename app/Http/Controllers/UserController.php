@@ -5,16 +5,12 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\ShowUser;
 use App\Models\MovieUser;
-use App\Traits\GetShowTrait;
 use Illuminate\Http\Request;
-use App\Traits\GetMovieTrait;
 use App\Http\Controllers\Controller;
 use Spatie\ResponseCache\Facades\ResponseCache;
 
 class UserController extends Controller
 {
-    use GetMovieTrait, GetShowTrait;
-
     /**
      * Show the user Register/create view
      *

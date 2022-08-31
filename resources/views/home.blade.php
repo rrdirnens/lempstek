@@ -9,14 +9,12 @@
 	@endif
 	
 	<form action="{{ route('search') }}" method="GET" class="h-16 flex justify-center">
-		@csrf
 		<input type="text" name="search_query" placeholder="Enter keywords" required class="border p-2 h-full">
 		<button type="submit" class="p-2 w-32 h-full text-lg bg-blue-200">Search</button>
 	</form>
 
 	@isset($search_results)
 		<form action="{{ route('search') }}" method="GET" class="flex justify-center">
-			@csrf
 			@for ($i = 0; $i < $search_pagination_total; $i++)
 				<button type="submit" name="page" value="{{$i+1}}" class="p-2 w-32 h-full text-lg {{$search_pagination_current == $i+1 ? 'bg-blue-400' : 'bg-blue-200'}}">{{$i+1}}</button>
 			@endfor

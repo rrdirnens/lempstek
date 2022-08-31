@@ -5,11 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Http as Client;
 use Illuminate\Http\Request;
 use stdClass;
-use App\Traits\GetMovieTrait;
 
 class MovieController extends Controller
 {
-    use GetMovieTrait;
 
     public function showMovie($id) {
 
@@ -18,11 +16,10 @@ class MovieController extends Controller
         // TODO: check if movie exists
 
         $result = new stdClass();
-        $result->movie = $movie->object();
+        $result->movie = $movie->getBody()->getContents();
         
         // convert $result->movie to an array
-        $this->data['movie'] = json_decode(json_encode($result->movie), true);
-
+        $this->data['movie'] = json_decode($result->movie, true);
         
         return view('movie', $this->data);
 
