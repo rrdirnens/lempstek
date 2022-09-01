@@ -201,9 +201,10 @@ class Controller extends BaseController
 
         }
 
-        // Remove dates which are older than X days.
+        // Remove dates which are older than X days (X set by user, fallback on default)
         $dates = collect($dates)->filter(function($details, $date) {
-            return $this->daysLeft($date) >= -14;
+            $limit = $this->data['user']->day_limit; // all users have this value set, default is 7
+            return $this->daysLeft($date) >= -$limit;
         });
 
         // indicate which date is the current date

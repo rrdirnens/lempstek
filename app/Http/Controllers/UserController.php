@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\ShowUser;
 use App\Models\MovieUser;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Spatie\ResponseCache\Facades\ResponseCache;
 
@@ -106,8 +107,29 @@ class UserController extends Controller
         $user = auth()->user();
         
         $this->data['user'] = $user;
-        
+                
         return view('users.profile', $this->data);
+    }
+
+    /**
+     * Change day limit setting for user
+     *
+     * @return \Illuminate\Http\Response
+     * @param  \Illuminate\Http\Request  $request
+     */
+    public function edit(Request $request) {
+        $formFields = $this->validate($request, [
+            'day_limit' => 'required|integer|min:0',
+        ]);
+
+        $user = DB::table('users')
+                    ->where('id', auth()->user()->id);
+        $user->update(['day_limit' => $formFields['day_limit']]);
+
+        ResponseCache::clear();
+
+        return back()->with('message', 'Your day limit has been updated!');
+        
     }
 
     /**
