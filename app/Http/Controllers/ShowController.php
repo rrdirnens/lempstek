@@ -8,7 +8,8 @@ class ShowController extends Controller
 {
 
     public function showShow($id) {
-        
+        $this->getBasicUserData();
+
         $show = $this->getShowById($id);
 
         $result = new stdClass();

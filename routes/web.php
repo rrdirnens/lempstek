@@ -65,9 +65,9 @@ Route::get('/user-movie/{id}/delete', [UserController::class, 'removeMovie'])->n
 // Show user's movies
 
 // Show user's profile
-Route::get('/user/{id}', [UserController::class, 'show'])->name('users.profile')->middleware(['auth', 'doNotCacheResponse']);
+Route::get('/user/{id}', [UserController::class, 'show'])->name('users.profile')->middleware(['auth']);
 
-Route::post('/user/{id}/edit', [UserController::class, 'edit'])->name('users.edit')->middleware(['auth', 'doNotCacheResponse']);
+Route::post('/user/{id}/edit', [UserController::class, 'edit'])->name('users.edit')->middleware(['auth']);
 
 
 /*

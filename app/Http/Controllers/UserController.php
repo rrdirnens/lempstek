@@ -8,7 +8,6 @@ use App\Models\MovieUser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use Spatie\ResponseCache\Facades\ResponseCache;
 
 class UserController extends Controller
 {
@@ -126,8 +125,6 @@ class UserController extends Controller
                     ->where('id', auth()->user()->id);
         $user->update(['day_limit' => $formFields['day_limit']]);
 
-        ResponseCache::clear();
-
         return back()->with('message', 'Your day limit has been updated!');
         
     }
@@ -169,8 +166,6 @@ class UserController extends Controller
         $userShow->show_id = $show;
         $userShow->save();
 
-        ResponseCache::clear();
-
         return redirect()->back()->with('message', 'Show added!');
     }
     /**
@@ -185,8 +180,6 @@ class UserController extends Controller
         $userShow = ShowUser::where('user_id', $user->id)->where('show_id', $id)->first();
         $userShow->delete();
         
-        ResponseCache::clear();
-
         return back()->with('message', 'Show removed!');
     }
 
@@ -218,8 +211,6 @@ class UserController extends Controller
         $userMovie->movie_id = $movie;
         $userMovie->save();
 
-        ResponseCache::clear();
-        
         return redirect()->back()->with('message', 'Movie added!');
     }
 
@@ -234,8 +225,6 @@ class UserController extends Controller
         // delete user movie entry to the join table for user movies
         $userMovie = MovieUser::where('user_id', $user->id)->where('movie_id', $id)->first();
         $userMovie->delete();
-
-        ResponseCache::clear();
 
         return back()->with('message', 'Movie removed!');
     }

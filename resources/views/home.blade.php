@@ -3,10 +3,6 @@
 @section('content')
 	
 <section class="container mx-auto p-4">
-
-	@if(session()->has('message'))
-	<h1 class="text-green-400 text-xl">{{session('message')}}</h1>
-	@endif
 	
 	<form action="{{ route('search') }}" method="GET" class="h-16 flex justify-center">
 		<input type="text" name="search_query" placeholder="Enter keywords" required class="border p-2 h-full">
@@ -21,18 +17,6 @@
 			<input type="text" name="search_query" class="hidden" value="{{$search_query}}">
 		</form>
 	@endisset
-
-	@error('user_show')
-		<p class="text-red-500 text-xl mt-1">{{$message}}</p>
-	@enderror
-	
-	@error('user_movie')
-		<p class="text-red-500 text-xl mt-1">{{$message}}</p>
-	@enderror
-
-	@error('user')
-		<p class="text-red-500 text-xs mt-1">{{$message}}</p>
-	@enderror
 
 	@if (isset($search_results))
 		<div class="flex justify-center">

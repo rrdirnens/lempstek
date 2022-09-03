@@ -15,6 +15,8 @@
             <p class="mb-4">Next episode : no info :(</p>        
         @endif
         <p class="italic mb-2">Overview : {{$show['overview']}}</p>
+        <a href="{{ route('users.tv.store', $id = $show['id']) }}" class="font-bold my-4">Add to calendar</a>
+
         <img src="https://image.tmdb.org/t/p/w500{{ $show['backdrop_path'] }}" alt="backdrop" class="mb-2">
         <img src="https://image.tmdb.org/t/p/w500{{ $show['poster_path'] }}" alt="poster">
 
