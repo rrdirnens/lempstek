@@ -10,7 +10,6 @@
         <p class="text-xl mb-2">Title: {{$show['original_name']}}</p>
 
         <div class="flex">
-
             <div class="tab-container">
                 <div class="tab-menu">
                     <ul>
@@ -32,8 +31,8 @@
                             </div>  
                 
                     @endforeach    
-                </div><!--end of tab three--> 
-            </div><!--end of container-->
+                </div>
+            </div>
         </div>
 
             

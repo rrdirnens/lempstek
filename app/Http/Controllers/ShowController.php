@@ -15,27 +15,6 @@ class ShowController extends Controller
         $result->show = json_decode($result->show, true);
         
         $showData = $this->getSeasonAndEpisodesData($id, $result->show);
-        // $requestWithSeasons = [];
-        // if(empty($result->show['seasons']) || !isset($result->show['seasons'])) {
-        //     $requestWithSeasons = null;
-        // } else {
-        //     $requestWithSeasons = $this->getAllEpisodesByShowId($id, $result->show['seasons']);
-            
-        //     $seasonKeys = [];
-        //     $startWith = 'season';
-        //     foreach($requestWithSeasons as $key => $value) {
-        //         $expKey = explode('/', $key);
-        //         if($expKey[0] == $startWith) {
-        //             $seasonKeys[$key] = $value;
-        //         }
-        //     }
-        //     ksort($seasonKeys);
-        //     $result->show['sorted_seasons'] = $seasonKeys;
-        // }
-
-        // $seasonsAndEpisodes = $result->show['request_with_seasons'];
-
-        
 
         // show how many days left until next episode
         $next_episode = $showData['next_episode_to_air'] ?? null;
@@ -53,7 +32,7 @@ class ShowController extends Controller
         $showData['in_calendar'] = false;
         foreach($this->data['shows'] as $show) {
             if($show['show_id'] == $id) {
-                $show['in_calendar'] = true;
+                $showData['in_calendar'] = true;
                 break;
             }
         }

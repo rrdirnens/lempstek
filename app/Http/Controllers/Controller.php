@@ -73,6 +73,11 @@ class Controller extends BaseController
         return view('home', $this->data);
     }
 
+    public function about() {
+        $this->getBasicUserData();
+        return view('about', $this->data);
+    }
+
     public function entertainmentSearch (Request $request) {
         $this->getBasicUserData();
         $query = $request->input('search_query');

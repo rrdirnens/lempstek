@@ -9,31 +9,42 @@
 </head>
 
 <body>
-    <nav class="bg-blue-200 p-2">
+    <nav class="p-2">
         <div class="container mx-auto">
             <div class="flex justify-between items-center">
                 <div class="flex items-center">
-                    <a href="{{ route('home') }}" class="text-2xl font-bold">Entertainment calendar</a>
+                    <a href="{{ route('home') }}" title="Home" class="text-2xl font-bold">Entertainment calendar</a>
                 </div>
                 <div class="flex items-center">
-                    <a href="{{ route('home') }}" class="text-xl p-2 font-bold">Home</a>
+                    <a href="{{ route('home') }}" title="Home" class="text-xl p-2 font-bold">
+                        <img class="w-8 h-8" src="../images/icons/solid/home.svg" alt="home">
+                    </a>
+                    <a href="{{ route('about') }}" title="About" class="text-xl p-2 font-bold">
+                        <img class="w-8 h-8" src="../images/icons/solid/question.svg" alt="About">
+                    </a>
                     
-                    @auth
                     
-                    <a href="{{ route('users.profile', auth()->user()->id) }}" class="text-xl p-2 font-bold">Profile</a>
-                        <form action="/logout" method="POST" class="mb-0">
-                            @csrf
-                            <button type="submit" class="text-xl p-2 font-bold">
-                                Logout
-                            </button>
-                        </form>
-                    
-                    @else
-                    
-                        <a href="{{ route('register') }}" class="text-xl p-2 font-bold">Register</a>
-                        <a href="{{ route('login') }}" class="text-xl p-2 font-bold">Login</a>
-                    
-                    @endauth
+                    <div class="profile-menu">
+                        <img class="profile-btn cursor-pointer" src="../images/icons/solid/profile.svg" alt="profile">
+                        <div class="profile-drawer">
+                            @auth    
+                                <a href="{{ route('users.profile', auth()->user()->id) }}" class="profile-drawer-item">
+                                    Profile
+                                </a>
+                                <form action="{{ route('users.logout') }}" method="POST" class="mb-0">
+                                    @csrf
+                                    <button type="submit" title="Logout" class="profile-drawer-item">
+                                        Logout
+                                    </button>
+                                </form>
+                            @else
+                                <a href="{{ route('register') }}" class="profile-drawer-item">Register</a>
+                                <a href="{{ route('login') }}" class="profile-drawer-item">
+                                    Login
+                                </a>
+                            @endauth
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

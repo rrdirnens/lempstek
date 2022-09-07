@@ -31,7 +31,7 @@
 						@else
 							<a href="{{route('users.tv.store', $item->id)}}" class="inline-block mb-2 hover:text-green-900">Add to calendar</a>
 						@endif
-						<a href="{{route('shows.show', $item->id)}}">
+						<a href="{{route('tv.show', $item->id)}}">
 							<div>
 								<strong>{{$item->name}}</strong>
 							</div>
@@ -98,7 +98,7 @@
 								{{$show['name']}}
 							</div>
 							<div class="item-button__overlay">
-								<a class="item-button__action item-button__action--view" href="{{route('shows.show', $show['id'])}}">View</a>
+								<a class="item-button__action item-button__action--view" href="{{route('tv.show', $show['id'])}}">View</a>
 								<div class="item-button__divider">|</div>
 								<a class="item-button__action item-button__action--remove" href="{{route('users.tv.delete', $show['id'])}}">Remove</a>
 							</div>

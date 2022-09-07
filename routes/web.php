@@ -26,6 +26,8 @@ Route::get('/', [Controller::class, 'home'])->name('home');
 // search route
 Route::get('/search', [Controller::class, 'entertainmentSearch'])->name('search');
 
+// about route
+Route::get('/about', [Controller::class, 'about'])->name('about');
 
 /*
 |--------------------------------------------------------------------------
@@ -46,7 +48,7 @@ Route::get('/login', [UserController::class, 'login'])->name('login');
 Route::post('/users/authenticate', [UserController::class, 'authenticate'])->name('users.authenticate');
 
 // logout (user)
-Route::post('/logout', [UserController::class, 'logout'])->name('logout');
+Route::post('/logout', [UserController::class, 'logout'])->name('users.logout');
 
 // Add TV show to user
 Route::get('/user-tv/{id}', [UserController::class, 'addTvShow'])->name('users.tv.store')->middleware('auth');
@@ -67,6 +69,7 @@ Route::get('/user-movie/{id}/delete', [UserController::class, 'removeMovie'])->n
 // Show user's profile
 Route::get('/user/{id}', [UserController::class, 'show'])->name('users.profile')->middleware(['auth']);
 
+// edit user's profile settings
 Route::post('/user/{id}/edit', [UserController::class, 'edit'])->name('users.edit')->middleware(['auth']);
 
 
@@ -80,4 +83,4 @@ Route::post('/user/{id}/edit', [UserController::class, 'edit'])->name('users.edi
 Route::get('/movies/{id}', [MovieController::class, 'showMovie'])->name('movies.show');
 
 // Show show page
-Route::get('/shows/{id}', [ShowController::class, 'showShow'])->name('shows.show');
+Route::get('/shows/{id}', [ShowController::class, 'showShow'])->name('tv.show');

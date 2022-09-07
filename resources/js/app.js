@@ -3,14 +3,20 @@ require('./bootstrap');
 window.addEventListener( 'load', function() {
     console.log('js working')
 
-    
-    // $('.tab-a').click(function(){  
-    //     $(".tab").removeClass('tab-active');
-    //     $(".tab[data-id='"+$(this).attr('data-id')+"']").addClass("tab-active");
-    //     $(".tab-a").removeClass('active-a');
-    //     $(this).parent().find(".tab-a").addClass('active-a');
-    // });
+    // profile menu script
+    const profileMenu = document.querySelector('.profile-menu');
+    const profileMenuBtn = document.querySelector('.profile-btn');
+    profileMenuBtn.addEventListener('click', function() {
+        console.log('clicked');
+        profileMenu.classList.toggle('active');
+    });
+    // remove active class from profile menu when clicked outside
+    document.addEventListener('click', function(e) {
+        if (e.target.closest('.profile-menu') || e.target.closest('.profile-btn')) return;
+        profileMenu.classList.remove('active');
+    });
 
+    // tabs script
     triggers = document.querySelectorAll('.tab-a');
     triggers.forEach(function(trigger) {
         trigger.addEventListener('click', function() {
