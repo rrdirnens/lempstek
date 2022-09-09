@@ -10,7 +10,7 @@
         .profile-drawer {
             @apply flex flex-col absolute top-2 right-0 w-40 mt-10 mr-2 bg-white rounded border border-stone-900 shadow-lg overflow-hidden;
             .profile-drawer-item {
-                @apply flex items-center justify-center hover:bg-rose-100 text-xl w-full p-4 font-bold;
+                @apply flex items-center justify-center hover:bg-rose-200 text-xl w-full p-4 font-bold;
             }
         }
     }

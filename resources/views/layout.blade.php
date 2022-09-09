@@ -9,7 +9,7 @@
 </head>
 
 <body>
-    <nav class="p-2">
+    <nav class="py-2 px-4">
         <div class="container mx-auto">
             <div class="flex justify-between items-center">
                 <div class="flex items-center">
@@ -52,7 +52,7 @@
 
     <div class="container errors-and-messages mx-auto">
         @if(session()->has('message'))
-            <h1 class="text-green-400 text-xl">{{session('message')}}</h1>
+            <h1 class="text-green-700 text-xl">{{session('message')}}</h1>
         @endif
 
         @error('user_show')

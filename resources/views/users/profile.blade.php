@@ -7,18 +7,20 @@
 
     <section class="container mx-auto p-4">
 
-        <h1 class="text-xl">Hi, {{$user->name}} </h1>
-        
-        <br>
-
-        <div class="text-lg mb-6">Not much to see here. All the useful stuff is on the <a class="font-bold hover:text-red-200" href="{{route('home')}}">home page.</a></div>
-
-        <div>Change how many days in the past are displayed on your schedule</div>
-        <form action="{{ route('users.edit', $user->id) }}" method="POST">
-            @csrf
-            <input type="number" name="day_limit" value="{{$user->day_limit}}">
-            <button type="submit" class="bg-blue-200 text-lg hover:bg-blue-400 text-blue-900 p-2 rounded-lg">Edit profile</button>
-        </form>
+        <h1 class="text-xl mb-6">Hi, {{$user->name}} </h1>
+                
+        <h2 class="text-lg mb-4">Settings:</h2>
+        <div class="flex flex-col">
+            <form action="{{ route('users.edit', $user->id) }}" method="POST">
+                @csrf
+                <div class="form-group mb-4 flex flex-row items-center justify">
+                    <label for="day_limit" class="mr-2">Day limit</label>
+                    <input type="number" name="day_limit" value="{{$user->day_limit}}" class="border border-stone-900 py-1 px-2 w-20 mr-2">
+                    <p class="text-sm text-stone-400">Changes how many days in the past are displayed on your schedule (only relevant for movies)</p>
+                </div>
+                <button type="submit" class="bg-rose-200 text-lg hover:bg-rose-300 mt-6 py-2 px-4 border border-2 border-stone-900">Save changes</button>
+            </form>
+        </div>
         
         @if(session()->has('message'))
             <h1 class="text-green-400">{{session('message')}}</h1>

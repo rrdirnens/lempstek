@@ -42,7 +42,7 @@ class UserController extends Controller
 
         auth()->login($user);
 
-        return redirect('/')->with('message', 'You are now logged in!');
+        return redirect()->intended()->with('message', 'You are now logged in!');
     }
 
     /**
@@ -50,8 +50,9 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function login() {
-        return view('users.login');
+    public function login(Request $request) {
+        $this->data['saved_url'] = $request->session()->previousUrl();
+        return view('users.login', $this->data);
     }
 
     /**
@@ -61,7 +62,6 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function authenticate(Request $request) {
-
         $formFields = $this->validate($request, [
             'email' => 'required|email',
             'password' => 'required',
@@ -69,7 +69,7 @@ class UserController extends Controller
 
         if (auth()->attempt($formFields)) {
             $request->session()->regenerate();
-            return redirect('/')->with('message', 'You are now logged in!');
+            return redirect()->intended()->with('message', 'You are now logged in!');
         } else {
             return back()->withErrors(['email' => 'Invalid credentials'])->onlyInput('email');
         }
@@ -144,7 +144,7 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function addTvShow($id) {
+    public function addTvShow($id, Request $request) {
         $user = auth()->user();
         $show = $id;
         
@@ -166,7 +166,12 @@ class UserController extends Controller
         $userShow->show_id = $show;
         $userShow->save();
 
-        return redirect()->back()->with('message', 'Show added!');
+        $prevUrl = $request->session()->previousUrl();
+        if(str_ends_with($prevUrl ,'/login') || str_ends_with($prevUrl ,'/register')) {
+            return redirect()->intended()->with('message', 'Show added!');
+        } else {
+            return back()->with('message', 'Show added to your list!');
+        }
     }
     /**
      * Remove TV show from user
@@ -211,7 +216,13 @@ class UserController extends Controller
         $userMovie->movie_id = $movie;
         $userMovie->save();
 
-        return redirect()->back()->with('message', 'Movie added!');
+        $prevUrl = $request->session()->previousUrl();
+        if(str_ends_with($prevUrl ,'/login') || str_ends_with($prevUrl ,'/register')) {
+            return redirect()->intended()->with('message', 'Movie added!');
+        } else {
+            return back()->with('message', 'Movie added!');
+        }
+
     }
 
     /**

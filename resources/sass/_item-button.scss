@@ -3,8 +3,8 @@
     position: relative;
 
     .item-button__container {
-        @apply font-bold p-2 border hover:bg-red-200 flex text-center justify-center items-center;
-        min-width: 140px;
+        @apply font-bold p-2 border border-2 border-stone-600 hover:bg-red-200 flex text-center justify-center items-center;
+        min-width: 160px;
     
     }
     .item-button__overlay {
@@ -21,15 +21,15 @@
     }
 
     .item-button__action {
-
+        @apply text-lg font-bold;
     }
 
     .item-button__action--remove:hover {
-        @apply text-red-200;
+        @apply text-rose-400;
     }
    
     .item-button__action--view:hover {
-        @apply text-blue-200;
+        @apply text-rose-200;
     }
     
     &:hover {
