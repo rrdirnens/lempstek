@@ -1,3 +1,5 @@
+# DEPRECATED! This was in use when the server was on a spare laptop running ubuntu. There will be a different deployment approach when this find a permanent hosted home [ TODO ]
+
 #!/bin/bash
 set -e
 
