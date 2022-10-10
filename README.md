@@ -36,8 +36,6 @@
 http://server_domain_or_IP:8000, i.e. probably `localhost:8000`
 
 
-[=== TODO ===]
-
 ### NODE/NPM setup
 
 Follow this very short and simple instructional article to install Node and NPM https://logfetch.com/install-node-npm-wsl2/ 
