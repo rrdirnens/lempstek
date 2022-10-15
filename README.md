@@ -32,24 +32,32 @@ docker-compose build app
 
 ### To run the docker container
 
-```docker-compose up -d```
+```
+docker-compose up -d
+```
 
 to run in background. Check docker-compose commands for more info: https://docs.docker.com/compose/reference/ 
 
-[optional] ```docker-compose ps``` to see state of active services (containers running in background)
+[optional] 
+```docker-compose ps```
+to see state of active services (containers running in background)
 
 <br>
 
 ### Composer install (+ notice, this is how you run composer commands)
 
-`docker-compose exec app rm -rf vendor composer.lock`
-`docker-compose exec app composer install`
+```
+docker-compose exec app rm -rf vendor composer.lock
+docker-compose exec app composer install
+```
 
 <br>
 
 ### Generate the APP_KEY (+ notice, this is how you run artisan commands)
 
-`docker-compose exec app php artisan key:generate`
+```
+docker-compose exec app php artisan key:generate
+```
 
 <br>
 
@@ -65,8 +73,13 @@ Follow this very short and simple instructional article to install Node and NPM 
 
 Once done, run: 
 
-`npm install` to install the packages defined in package.json
+```
+npm install
+```
+to install the packages defined in package.json
 
-`npm run watch` to watch assets for development. BrowserSync enabled by default and runs on port 3000, so if you want hot reloads, go to :3000 not :8000. The port can be changed in webpack.mix.js file in project root.
+```npm run watch```
+to watch assets for development. BrowserSync enabled by default and runs on port 3000, so if you want hot reloads, go to :3000 not :8000. The port can be changed in webpack.mix.js file in project root.
 
-`npm run prod` to build assets for deployment
+```npm run prod``` 
+to build assets for deployment
