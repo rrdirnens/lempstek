@@ -1,5 +1,5 @@
 # Entertainment Calendar 
-
+<br>
 ## Local Docker setup (not 100% complete)
 
 ### Dependencies
