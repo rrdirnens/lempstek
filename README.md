@@ -71,19 +71,20 @@ http://server_domain_or_IP:8000, i.e. probably `localhost:8000`
 
 Follow this very short and simple instructional article to install Node and NPM https://logfetch.com/install-node-npm-wsl2/ 
 
-Once done, run: 
+Once done, to install the packages defined in package.json, run: 
 
 ```
 npm install
 ```
-to install the packages defined in package.json
+
+To watch assets for development run this. BrowserSync enabled by default and runs on port 3000, so if you want hot reloads, go to :3000 not :8000. The port can be changed in webpack.mix.js file in project root.
 
 ```
 npm run watch
 ```
-to watch assets for development. BrowserSync enabled by default and runs on port 3000, so if you want hot reloads, go to :3000 not :8000. The port can be changed in webpack.mix.js file in project root.
 
+To build assets for deployment, run:
 ```
 npm run prod
 ``` 
-to build assets for deployment
+
