@@ -16,7 +16,9 @@
 
 ### Copy and edit the .env file (add TMDB api key and DB credentials). 
 
-<code>cp .env.example .env`</code>
+```
+cp .env.example .env
+```
 
 <br>
 
