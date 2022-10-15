@@ -33,6 +33,7 @@ docker-compose build app
 ### To run the docker container
 
 ```docker-compose up -d```
+
 to run in background. Check docker-compose commands for more info: https://docs.docker.com/compose/reference/ 
 
 [optional] ```docker-compose ps``` to see state of active services (containers running in background)
