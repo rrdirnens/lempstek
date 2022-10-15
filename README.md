@@ -78,8 +78,12 @@ npm install
 ```
 to install the packages defined in package.json
 
-```npm run watch```
+```
+npm run watch
+```
 to watch assets for development. BrowserSync enabled by default and runs on port 3000, so if you want hot reloads, go to :3000 not :8000. The port can be changed in webpack.mix.js file in project root.
 
-```npm run prod``` 
+```
+npm run prod
+``` 
 to build assets for deployment
