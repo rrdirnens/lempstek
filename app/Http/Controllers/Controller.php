@@ -118,7 +118,8 @@ class Controller extends BaseController
         if ($this->data['logged_in']) {
             $this->editSearchResultsBasedOnUserCalendar($this->data['search_results']);
         }
-
+        dump($this); 
+        
         return $this->home($request, $this);
     }
 
