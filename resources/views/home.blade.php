@@ -34,12 +34,13 @@
 				<p>click/tap "Add to your calendar" or click on the name to view it</p> 
 			</div>
 		@endif
-		<div class="flex justify-center">
+		<div class="flex justify-center search-results">
 			@if ($search_results->tv)
-			<div class="mr-4">
-				<h1 class="text-xl font-bold">TV shows</h1>
+			<div class="mr-2 max-w-5/10 w-[50%] search-results__shows">
+				<h1 class="text-2xl text-right font-bold">TV shows</h1>
 				@foreach ($search_results->tv as $item)
-					<div class="border border-2 border-stone-600 p-2 mb-1">
+					<div class="search-result__cover border border-2 border-stone-600 p-2 mb-1">
+						<img class="search-result__image max-w-5/10" src="https://image.tmdb.org/t/p/w500/{{$item->poster_path}}" alt="">
 
 						@if (isset($item->in_calendar) && $item->in_calendar)
 							<a href="{{route('users.tv.delete', $item->id)}}" class="inline-block mb-2 hover:text-rose-500 text-rose-400">REMOVE</a>
@@ -56,10 +57,12 @@
 			</div>
 			@endif
 			@if ($search_results->movies)
-			<div class="">
-				<h1 class="text-xl font-bold">Movies</h1>
+			<div class="ml-2 max-w-5/10 w-[50%] search-results__movies">
+				<h1 class="text-2xl font-bold">Movies</h1>
 				@foreach ($search_results->movies as $item)
-					<div class="border border-2 border-stone-600 p-2 mb-1">
+					<div class="search-result__cover border border-2 border-stone-600 p-2 mb-1">
+						<img class="search-result__image max-w-5/10" src="https://image.tmdb.org/t/p/w500/{{$item->poster_path}}" alt="">
+
 						@if (isset($item->in_calendar) && $item->in_calendar)
 							<a href="{{route('users.movie.delete', $item->id)}}" class="inline-block mb-2 hover:text-rose-300 text-rose-200">REMOVE</a>
 						@else
