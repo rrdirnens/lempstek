@@ -39,9 +39,12 @@
 			<div class="mr-2 max-w-5/10 w-[50%] search-results__shows">
 				<h1 class="text-2xl text-right font-bold">TV shows</h1>
 				@foreach ($search_results->tv as $item)
-					<div class="search-result__cover border border-2 border-stone-600 p-2 mb-1">
-						<img class="search-result__image max-w-5/10" src="https://image.tmdb.org/t/p/w500/{{$item->poster_path}}" alt="">
-
+					<div class="search-result__cover border border-2 border-stone-600 p-2 mb-1 hover:bg-stone-200">
+						@if(isset($item->poster_path))
+							<img class="search-result__image max-w-5/10" src="https://image.tmdb.org/t/p/w500/{{$item->poster_path}}" alt="">
+						@else
+							<img class="search-result__image max-w-5/10" src="../images/placeholders/no_postah.jpg" alt="">
+						@endif
 						@if (isset($item->in_calendar) && $item->in_calendar)
 							<a href="{{route('users.tv.delete', $item->id)}}" class="inline-block mb-2 hover:text-rose-500 text-rose-400">REMOVE</a>
 						@else
@@ -60,8 +63,12 @@
 			<div class="ml-2 max-w-5/10 w-[50%] search-results__movies">
 				<h1 class="text-2xl font-bold">Movies</h1>
 				@foreach ($search_results->movies as $item)
-					<div class="search-result__cover border border-2 border-stone-600 p-2 mb-1">
-						<img class="search-result__image max-w-5/10" src="https://image.tmdb.org/t/p/w500/{{$item->poster_path}}" alt="">
+					<div class="search-result__cover border border-2 border-stone-600 p-2 mb-1 hover:bg-stone-200">
+						@if(isset($item->poster_path))
+							<img class="search-result__image max-w-5/10" src="https://image.tmdb.org/t/p/w500/{{$item->poster_path}}" alt="">
+						@else
+							<img class="search-result__image max-w-5/10" src="../images/placeholders/no_postah.jpg" alt="">
+						@endif
 
 						@if (isset($item->in_calendar) && $item->in_calendar)
 							<a href="{{route('users.movie.delete', $item->id)}}" class="inline-block mb-2 hover:text-rose-300 text-rose-200">REMOVE</a>
