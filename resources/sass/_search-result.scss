@@ -1,0 +1,41 @@
+.search-results {
+
+    .search-results__shows, .search-results__movies {
+        &--faded {
+            opacity: .2;
+        }
+    
+        .search-result__cover {
+            position: relative;
+            
+            &:hover {
+                .search-result__image {
+                    display: flex;
+                }
+            }
+        
+            .search-result__image {
+                position: absolute;
+                display: none;
+                z-index: 1;
+            }
+            
+        }
+    }
+    
+    .search-results__shows {
+        .search-result__cover {
+            .search-result__image {
+                right: -52%
+            }
+        }
+    }
+
+    .search-results__movies {
+        .search-result__cover {
+            .search-result__image {
+                left: -52%
+            }
+        }
+    }
+}
