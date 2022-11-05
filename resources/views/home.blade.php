@@ -19,10 +19,25 @@
 
 
 	@isset($search_results)
-		<form action="{{ route('search') }}" method="GET" class="flex justify-center">
-			@for ($i = 0; $i < $search_pagination_total; $i++)
-				<button type="submit" name="page" value="{{$i+1}}" class="p-2 w-32 h-full text-lg {{$search_pagination_current == $i+1 ? 'bg-rose-300' : 'bg-rose-200'}}">{{$i+1}}</button>
-			@endfor
+		<form action="{{ route('search') }}" method="GET" class="pagination">
+			<button type="submit" name="page" value="{{$search_pagination_current-1}}" class="p-2 w-32 h-full text-lg hover:bg-rose-300 {{$search_pagination_current > 1 ? 'bg-rose-200' : 'hidden'}}"><</button>
+			@if ($search_pagination_total > 10)
+				<div class="pagination__warning">
+					<img src="../images/icons/solid/warn.svg" alt="" class="pagination__image">
+					<div class="pagination__message">
+						Ay, yo, my guy, das a lot of results({{$search_pagination_total}} pages). You can narrow it down by adding more keywords.
+					</div>
+				</div>
+				@for ($i = $search_pagination_current - 1; $i < $search_pagination_current + 9; $i++)
+					<button type="submit" name="page" value="{{$i+1}}" class="p-2 w-32 h-full text-lg hover:bg-rose-300 {{$search_pagination_current == $i+1 ? 'bg-rose-300' : 'bg-rose-200'}}">{{$i+1}}</button>
+				@endfor
+				<button type="submit" name="page" value="{{$search_pagination_current + 10}}" class="p-2 w-32 h-full text-lg bg-rose-200 hover:bg-rose-300">...</button>
+			@else
+				@for ($i = 0; $i < $search_pagination_total; $i++)
+					<button type="submit" name="page" value="{{$i+1}}" class="p-2 w-32 h-full text-lg hover:bg-rose-300 {{$search_pagination_current == $i+1 ? 'bg-rose-300' : 'bg-rose-200'}}">{{$i+1}}</button>
+				@endfor
+			@endif
+			<button type="submit" name="page" value="{{$search_pagination_current+1}}" class="p-2 w-32 h-full text-lg hover:bg-rose-300 {{$search_pagination_current < $search_pagination_total ? 'bg-rose-200' : 'hidden'}}">></button>
 			<input type="text" name="search_query" class="hidden" value="{{$search_query}}">
 		</form>
 	@endisset
@@ -34,7 +49,7 @@
 				<p>click/tap "Add to your calendar" or click on the name to view it</p> 
 			</div>
 		@endif
-		<div class="flex justify-center search-results">
+		<div class="flex justify-center search-results mb-4">
 			@if ($search_results->tv)
 			<div class="mr-2 max-w-5/10 w-[50%] search-results__shows">
 				<h1 class="text-2xl text-right font-bold">TV shows</h1>
@@ -88,10 +103,25 @@
 	@endif
 
 	@isset($search_results)
-		<form action="{{ route('search') }}" method="GET" class="flex justify-center">
-			@for ($i = 0; $i < $search_pagination_total; $i++)
-				<button type="submit" name="page" value="{{$i+1}}" class="p-2 w-32 h-full text-lg {{$search_pagination_current == $i+1 ? 'bg-rose-300' : 'bg-rose-200'}}">{{$i+1}}</button>
-			@endfor
+		<form action="{{ route('search') }}" method="GET" class="pagination">
+			<button type="submit" name="page" value="{{$search_pagination_current-1}}" class="p-2 w-32 h-full text-lg hover:bg-rose-300 {{$search_pagination_current > 1 ? 'bg-rose-200' : 'hidden'}}"><</button>
+			@if ($search_pagination_total > 10)
+				<div class="pagination__warning">
+					<img src="../images/icons/solid/warn.svg" alt="" class="pagination__image">
+					<div class="pagination__message">
+						Ay, yo, my guy, das a lot of results({{$search_pagination_total}} pages). You can narrow it down by adding more keywords.
+					</div>
+				</div>
+				@for ($i = $search_pagination_current - 1; $i < $search_pagination_current + 9; $i++)
+					<button type="submit" name="page" value="{{$i+1}}" class="p-2 w-32 h-full text-lg hover:bg-rose-300 {{$search_pagination_current == $i+1 ? 'bg-rose-300' : 'bg-rose-200'}}">{{$i+1}}</button>
+				@endfor
+				<button type="submit" name="page" value="{{$search_pagination_current + 10}}" class="p-2 w-32 h-full text-lg bg-rose-200 hover:bg-rose-300">...</button>
+			@else
+				@for ($i = 0; $i < $search_pagination_total; $i++)
+					<button type="submit" name="page" value="{{$i+1}}" class="p-2 w-32 h-full text-lg hover:bg-rose-300 {{$search_pagination_current == $i+1 ? 'bg-rose-300' : 'bg-rose-200'}}">{{$i+1}}</button>
+				@endfor
+			@endif
+			<button type="submit" name="page" value="{{$search_pagination_current+1}}" class="p-2 w-32 h-full text-lg hover:bg-rose-300 {{$search_pagination_current < $search_pagination_total ? 'bg-rose-200' : 'hidden'}}">></button>
 			<input type="text" name="search_query" class="hidden" value="{{$search_query}}">
 		</form>
 	@endisset
