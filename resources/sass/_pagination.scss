@@ -1,0 +1,25 @@
+.pagination {
+    @apply flex justify-center items-center mx-auto relative max-w-8/10;
+    
+    &__warning {
+        @apply absolute -right-12 flex;
+
+        &:hover {
+            .pagination__image {
+                @apply hidden;
+            }
+
+            .pagination__message {
+                @apply block;
+            }
+        }
+    }
+
+    &__message {
+       @apply p-3 border-2 border-stone-600 w-72 bg-white z-10 hidden;
+    }
+
+    &__image {
+        @apply w-8;
+    }
+}
