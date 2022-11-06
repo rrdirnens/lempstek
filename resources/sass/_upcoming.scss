@@ -1,0 +1,23 @@
+.upcoming__cover {
+    @apply flex flex-wrap;
+
+    /* width */
+    &::-webkit-scrollbar {
+        @apply h-2;
+    }
+
+    /* Track */
+    &::-webkit-scrollbar-track {
+        background: #f1f1f1;
+    }
+
+    /* Handle */
+    &::-webkit-scrollbar-thumb {
+        @apply bg-rose-200;
+    }
+
+    /* Handle on hover */
+    &::-webkit-scrollbar-thumb:hover {
+        @apply bg-rose-300;
+    }
+}
