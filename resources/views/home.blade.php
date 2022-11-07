@@ -21,9 +21,7 @@
 
         @isset($search_results)
             <form action="{{ route('search') }}" method="GET" class="pagination">
-                <button type="submit" name="page" value="{{ $search_pagination_current - 1 }}"
-                    class="p-2 w-32 h-full text-lg hover:bg-rose-300 {{ $search_pagination_current > 1 ? 'bg-rose-200' : 'hidden' }}">
-                    << /button>
+                <button type="submit" name="page" value="{{ $search_pagination_current - 1 }}" class="p-2 w-32 h-full text-lg hover:bg-rose-300 {{ $search_pagination_current > 1 ? 'bg-rose-200' : 'hidden' }}"><</button>
                         @if ($search_pagination_total > 10)
                             <div class="pagination__warning">
                                 <img src="../images/icons/solid/warn.svg" alt="" class="pagination__image">
@@ -120,9 +118,7 @@
 
         @isset($search_results)
             <form action="{{ route('search') }}" method="GET" class="pagination">
-                <button type="submit" name="page" value="{{ $search_pagination_current - 1 }}"
-                    class="p-2 w-32 h-full text-lg hover:bg-rose-300 {{ $search_pagination_current > 1 ? 'bg-rose-200' : 'hidden' }}">
-                    << /button>
+                <button type="submit" name="page" value="{{ $search_pagination_current - 1 }}" class="p-2 w-32 h-full text-lg hover:bg-rose-300 {{ $search_pagination_current > 1 ? 'bg-rose-200' : 'hidden' }}"><</button>
                         @if ($search_pagination_total > 10)
                             <div class="pagination__warning">
                                 <img src="../images/icons/solid/warn.svg" alt="" class="pagination__image">
@@ -158,11 +154,11 @@
 
 			<div class="mb-4">
                 <h2 class="mb-4 text-2xl font-bold">UPCOMING</h2>
-                <div class="upcoming__cover">
+                <div class="upcoming__cover grid xs:grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
                     @if (isset($dates) && !$dates->isEmpty())
                         @foreach ($dates as $date => $items)
                             <div
-                                class="min-w-[20%] w-1/5 m-2 p-2 border border-2 border-stone-600 {{ $items[0]['is_today'] ? 'bg-rose-200' : 'bg-white' }}">
+                                class="col-span-1 m-2 p-2 border border-2 border-stone-600 {{ $items[0]['is_today'] ? 'bg-rose-200' : 'bg-white' }}">
                                 <div class="mb-2">{{ $date }} @if ($items[0]['is_today'])
                                         | <span class="font-bold">TODAY</span>
                                     @endif
