@@ -4,11 +4,13 @@
 
     <section class="container mx-auto p-4">
         <div class="flex flex-col items-center">
-            <form action="{{ route('search') }}" method="GET" class="h-12 flex justify-center">
+            <form action="{{ route('search') }}" method="GET" class="h-12 flex justify-center md:w-auto w-full">
                 <input type="text" name="search_query" placeholder="Enter keywords" required
-                    class="border w-80 border-2 border-r-0 border-stone-600 px-4 h-full" value="{{ $search_query ?? '' }}">
-                <button type="submit"
-                    class="p-2 w-32 h-full text-lg bg-rose-200 hover:bg-rose-300 border border-2 border-l-0 border-stone-600">Search</button>
+                    class="border w-[70%] md:w-80 border-2 border-r-0 border-stone-600 px-4 h-full" value="{{ $search_query ?? '' }}">
+                <button type="submit" class="flex justify-center p-2 w-[30%] md:w-32 h-full text-lg bg-rose-200 hover:bg-rose-300 border border-2 border-l-0 border-stone-600">
+                    <span class="hidden md:block">Search</span>
+                    <img src="../images/icons/solid/search.svg" alt="" class="h-full md:hidden">
+                </button>
             </form>
             @if ((!$logged_in && empty($search_query)) || (empty($shows) && empty($movies) && empty($search_query)))
                 <div class="flex items-center">
