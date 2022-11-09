@@ -15,11 +15,11 @@
                 <div class="flex items-center">
                     <a href="{{ route('home') }}" title="Home" class="text-2xl font-bold">Entertainment calendar</a>
                 </div>
-                <div class="flex items-center">
-                    <a href="{{ route('home') }}" title="Home" class="text-xl p-2 font-bold">
+                <div class="header-menu">
+                    <a href="{{ route('home') }}" title="Home" class="header-menu__item--regular ">
                         <img class="w-8 h-8" src="../images/icons/solid/home.svg" alt="home">
                     </a>
-                    <a href="{{ route('about') }}" title="About" class="text-xl p-2 font-bold">
+                    <a href="{{ route('about') }}" title="About" class="header-menu__item--regular ">
                         <img class="w-8 h-8" src="../images/icons/solid/question.svg" alt="About">
                     </a>
                     
