@@ -43,24 +43,25 @@ window.addEventListener( 'load', function() {
     const searchResultShowsCol = document.querySelector('.search-results__shows');
     const searchResultMoviesCol = document.querySelector('.search-results__movies');
 
-    searchResultMoviesCol.addEventListener('mouseover', function(e) {
-        searchResultMoviesCol.classList.add('search-results__movies--hover');
-        searchResultMoviesCol.classList.remove('search-results__movies--faded');
-        searchResultShowsCol.classList.add('search-results__shows--faded');
-        searchResultShowsCol.classList.remove('search-results__shows--hover');
-    });
-    searchResultShowsCol.addEventListener('mouseover', function(e) {
-        searchResultShowsCol.classList.add('search-results__shows--hover');
-        searchResultShowsCol.classList.remove('search-results__shows--faded');
-        searchResultMoviesCol.classList.add('search-results__movies--faded');
-        searchResultMoviesCol.classList.remove('search-results__movies--hover');
-    });
-    searchResults.addEventListener('mouseleave', function(e) {
-        searchResultShowsCol.classList.remove('search-results__shows--hover');
-        searchResultShowsCol.classList.remove('search-results__shows--faded');
-        searchResultMoviesCol.classList.remove('search-results__movies--hover');
-        searchResultMoviesCol.classList.remove('search-results__movies--faded');
-
-    });
+    if(searchResults) {
+        searchResultMoviesCol.addEventListener('mouseover', function(e) {
+            searchResultMoviesCol.classList.add('search-results__movies--hover');
+            searchResultMoviesCol.classList.remove('search-results__movies--faded');
+            searchResultShowsCol.classList.add('search-results__shows--faded');
+            searchResultShowsCol.classList.remove('search-results__shows--hover');
+        });
+        searchResultShowsCol.addEventListener('mouseover', function(e) {
+            searchResultShowsCol.classList.add('search-results__shows--hover');
+            searchResultShowsCol.classList.remove('search-results__shows--faded');
+            searchResultMoviesCol.classList.add('search-results__movies--faded');
+            searchResultMoviesCol.classList.remove('search-results__movies--hover');
+        });
+        searchResults.addEventListener('mouseleave', function(e) {
+            searchResultShowsCol.classList.remove('search-results__shows--hover');
+            searchResultShowsCol.classList.remove('search-results__shows--faded');
+            searchResultMoviesCol.classList.remove('search-results__movies--hover');
+            searchResultMoviesCol.classList.remove('search-results__movies--faded');
+        });
+    }
 })
 
