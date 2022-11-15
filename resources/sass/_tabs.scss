@@ -1,39 +1,40 @@
-.tab-container{
-	margin: 5% 10%;
-	background-color: #c1e3d9;
-	padding: 3%;
-	border-radius: 4px;
-}
-.tab-menu{}
-.tab-menu ul{
-	margin: 0;
-	padding: 0;
-}
-.tab-menu ul li{
-	list-style-type: none;
-	display: inline-block;
-}
-.tab-menu ul li a{
-	text-decoration: none;
-	color: rgba(0,0,0,0.4);
-	background-color: #b4cbc4;
-	padding: 7px 25px;
-	border-radius: 4px;
-}
-.tab-menu ul li a.active-a{
-	background-color: #588d7d;
-	color: #ffffff;
-}
-.tab{
-	display: none;
-}
-.tab h2{
-	color: rgba(0,0,0,.7);
-}
-.tab p{
-	color: rgba(0,0,0,0.6);
-	text-align: justify;
-}
-.tab-active{
-	display: block;
+.tab-container {
+	&--regular {
+		@apply bg-stone-100;
+	}
+
+	&--search-results {
+		
+		.tab-menu {
+			@apply mb-2;
+		}
+
+		.tab-menu ul {
+			display: flex;
+			justify-content: center;
+		}
+	
+		.tab-menu ul li {
+			list-style-type: none;
+			// display: inline-block;
+			@apply w-full;
+		}
+	
+		.tab-menu ul li a {
+			@apply text-stone-500 text-center font-bold p-2 w-full block border-2 border-stone-900;
+			text-decoration: none;
+		}
+	
+		.tab-menu ul li a.active-a {
+			@apply text-white bg-stone-900 w-full;
+		}
+	}
+
+	.tab {
+		display: none;
+	}
+
+	.tab-active {
+		display: block;
+	}
 }

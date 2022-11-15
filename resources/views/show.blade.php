@@ -10,7 +10,7 @@
         <p class="text-xl mb-2">Title: {{$show['original_name']}}</p>
 
         <div class="flex">
-            <div class="tab-container">
+            <div class="tab-container tab-container--regular">
                 <div class="tab-menu">
                     <ul>
                         @foreach ($show['sorted_seasons'] as $season)
