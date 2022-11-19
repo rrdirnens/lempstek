@@ -39,9 +39,9 @@ window.addEventListener( 'load', function() {
     });
 
     // search results column hover script
-    const searchResults = document.querySelector('.search-results');
-    const searchResultShowsCol = document.querySelector('.search-results__shows');
-    const searchResultMoviesCol = document.querySelector('.search-results__movies');
+    const searchResults = document.querySelector('.search-results__container--desktop .search-results');
+    const searchResultShowsCol = document.querySelector('.search-results__container--desktop .search-results__shows');
+    const searchResultMoviesCol = document.querySelector(' .search-results__container--desktop .search-results__movies');
 
     if(searchResults) {
         searchResultMoviesCol.addEventListener('mouseover', function(e) {
