@@ -52,25 +52,20 @@
     </nav>
 
     <div class="container mx-auto errors-and-messages p-4 w-full">
-        <div class="border-dashed  border-2 border-stone-900 p-2">
-            <p class="text-stone-900 text-xl">session('message')</p>
-            <p class="text-red-500 text-xl mt-1">$message (for errors)</p>
-        </div>
-
         @if (session()->has('message'))
-        <h1 class="text-green-700 text-xl">{{ session('message') }}</h1>
+            <p class="p-2 bg-rose-200 text-stone-900 text-xl">{{ session('message') }}</p>
         @endif
 
         @error('user_show')
-        <p class="text-red-500 text-xl mt-1">{{ $message }}</p>
+            <p class="p-2 bg-stone-900 text-rose-200 text-xl mt-1">{{ $message }}</p>
         @enderror
 
         @error('user_movie')
-        <p class="text-red-500 text-xl mt-1">{{ $message }}</p>
+            <p class="p-2 bg-stone-900 text-rose-200 text-xl mt-1">{{ $message }}</p>
         @enderror
 
         @error('user')
-        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+            <p class="p-2 bg-stone-900 text-rose-200 text-xl mt-1">{{ $message }}</p>
         @enderror
     </div>
 

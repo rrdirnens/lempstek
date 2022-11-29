@@ -22,14 +22,6 @@
             </form>
         </div>
         
-        @if(session()->has('message'))
-            <h1 class="text-green-400">{{session('message')}}</h1>
-        @endif
-    
-        @error('user')
-            <p class="text-red-500 text-xs mt-1">{{$message}}</p>
-        @enderror
-        
     </section>
 
 @endsection
