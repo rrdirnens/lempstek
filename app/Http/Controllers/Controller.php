@@ -330,7 +330,7 @@ class Controller extends BaseController
             'rejected' => function ($reason, $index) {
                 // this is delivered each failed request
                 report($reason);
-                return back()->with('message', 'Something went wrong when looking for your shows. Try again later or contact me.');
+                return back()->withErrors(['user_show' => 'Something went wrong when looking for your shows. Try again later or contact me.']);
             },
         ]);
         $promise = $pool->promise();

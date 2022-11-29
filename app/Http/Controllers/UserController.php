@@ -170,7 +170,7 @@ class UserController extends Controller
         if(str_ends_with($prevUrl ,'/login') || str_ends_with($prevUrl ,'/register')) {
             return redirect()->intended()->with('message', 'Show added!');
         } else {
-            return back()->with('message', 'Show added to your list!');
+            return back()->with('message', 'Show added!');
         }
     }
     /**
