@@ -27,13 +27,16 @@ class ShowController extends Controller
         } else {
             $showData['next_release_calc'] = 'No next episode info';
         }
-
-        // check if list of shows returned by $this->getBasicUserData() contains this show (using this for displaying the "remove / add" buttons)
+        
         $showData['in_calendar'] = false;
-        foreach($this->data['shows'] as $show) {
-            if($show['show_id'] == $id) {
-                $showData['in_calendar'] = true;
-                break;
+
+        if($this->data['logged_in']) {
+            // check if list of shows returned by $this->getBasicUserData() contains this show (using this for displaying the "remove / add" buttons)
+            foreach($this->data['shows'] as $show) {
+                if($show['show_id'] == $id) {
+                    $showData['in_calendar'] = true;
+                    break;
+                }
             }
         }
         

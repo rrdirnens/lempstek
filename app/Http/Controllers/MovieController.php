@@ -20,13 +20,16 @@ class MovieController extends Controller
         
         // convert $result->movie to an array
         $result->movie = json_decode($result->movie, true);
-        
-        // check if list of movies returned by $this->getBasicUserData() contains this movies (using this for displaying the "remove / add" buttons)
+
         $result->movie['in_calendar'] = false;
-        foreach($this->data['movies'] as $movie) {
-            if($movie['movie_id'] == $id) {
-                $result->movie['in_calendar'] = true;
-                break;
+        
+        if($this->data['logged_in']) {
+            // check if list of movies returned by $this->getBasicUserData() contains this movies (using this for displaying the "remove / add" buttons)
+            foreach($this->data['movies'] as $movie) {
+                if($movie['movie_id'] == $id) {
+                    $result->movie['in_calendar'] = true;
+                    break;
+                }
             }
         }
         
