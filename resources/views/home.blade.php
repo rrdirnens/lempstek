@@ -315,12 +315,21 @@
         @if (empty($movies))
         <small class="text-rose-400 ml-4">No movies in your calendar</small>
         @endif
-        <div class="flex flex-wrap">
+        <div class="grid gap-x-2 gap-y-2 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-6">
             @if (isset($movies) && $movies)
             @foreach ($movies as $movie)
             <div class="item-button">
                 <div class="item-button__container">
-                    {{ $movie['title'] }}
+                    <div class="item-button__image">
+                        @if (isset($movie['poster_path']))
+                            <img src="https://image.tmdb.org/t/p/w500/{{$movie['poster_path']}}" alt="">
+                        @else
+                            <img src="../images/placeholders/no_postah.jpg" alt="">
+                        @endif
+                    </div>
+                    <div class="item-button__title">
+                        {{ $movie['title'] }}
+                    </div>
                 </div>
                 <div class="item-button__overlay">
                     <a class="item-button__action item-button__action--view"
@@ -340,12 +349,21 @@
         @if (empty($shows))
         <small class="text-rose-400 ml-4">No shows in your calendar</small>
         @endif
-        <div class="flex flex-wrap">
+        <div class="grid gap-x-2 gap-y-2 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-6">
             @if (isset($shows) && $shows)
             @foreach ($shows as $show)
             <div class="item-button">
                 <div class="item-button__container">
-                    {{ $show['name'] }}
+                    <div class="item-button__image">
+                        @if (isset($show['poster_path']))
+                            <img src="https://image.tmdb.org/t/p/w500/{{$show['poster_path']}}" alt="">
+                        @else
+                            <img src="../images/placeholders/no_postah.jpg" alt="">
+                        @endif
+                    </div>
+                    <div class="item-button__title">
+                        {{ $show['name'] }}
+                    </div>
                 </div>
                 <div class="item-button__overlay">
                     <a class="item-button__action item-button__action--view"
