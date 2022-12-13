@@ -3,11 +3,12 @@
 namespace App\Http\Controllers;
 
 use stdClass;
+use Illuminate\Support\Facades\Http as RegClient;
 
 class ShowController extends Controller
 {
 
-    public function showShow($id) {
+    public function show($id) {
         $this->getBasicUserData();
         $show = $this->getShowById($id);
         $result = new stdClass();
@@ -43,7 +44,6 @@ class ShowController extends Controller
         $this->data['show'] = $showData;
 
         return view('show', $this->data);
-
     }
     
     public function getSeasonAndEpisodesData($id, $show) {
@@ -66,5 +66,25 @@ class ShowController extends Controller
             $show['sorted_seasons'] = $seasonKeys;
             return $show;
         }
+    }
+    
+    public function getAllEpisodesByShowId($id, $seasons) {
+
+        $appendable = $this->buildEpisodesRequest($seasons);
+        $epSearch = RegClient::get("https://api.themoviedb.org/3/tv/{$id}", [
+            'api_key' => $this->tmdbkey,
+            'append_to_response' => $appendable,
+        ]);
+
+        return $epSearch->json();
+    }
+
+    public function buildEpisodesRequest($seasons) {
+        
+        $episodesRequest = '';
+        foreach ($seasons as $season) {
+            $episodesRequest .= "season/{$season['season_number']},";
+        }
+        return $episodesRequest;
     }
 }

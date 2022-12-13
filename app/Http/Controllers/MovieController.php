@@ -9,7 +9,7 @@ use stdClass;
 class MovieController extends Controller
 {
 
-    public function showMovie($id) {
+    public function show($id) {
         $this->getBasicUserData();
         $movie = $this->getMovieById($id);
 

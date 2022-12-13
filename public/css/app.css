@@ -688,22 +688,12 @@ video {
 .justify-between {
   justify-content: space-between;
 }
-.gap-1 {
-  gap: 0.25rem;
-}
-.gap-x-1 {
-  -moz-column-gap: 0.25rem;
-       column-gap: 0.25rem;
-}
-.gap-y-1 {
-  row-gap: 0.25rem;
-}
-.gap-y-2 {
-  row-gap: 0.5rem;
-}
 .gap-x-2 {
   -moz-column-gap: 0.5rem;
        column-gap: 0.5rem;
+}
+.gap-y-2 {
+  row-gap: 0.5rem;
 }
 .border {
   border-width: 1px;

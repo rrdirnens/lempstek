@@ -82,9 +82,7 @@ class UserController extends Controller
      */
     public function logout(Request $request) {
         auth()->logout();
-
         $request->session()->invalidate();
-
         $request->session()->regenerateToken();
 
         return redirect('/')->with('message', 'You are now logged out!');
@@ -102,9 +100,7 @@ class UserController extends Controller
         } elseif (auth()->user()->id != $id) {
             return redirect('/')->withErrors(['user' => 'You entered the wrong user ID! We sent you back to YOUR profile.']);
         }
-
         $user = auth()->user();
-        
         $this->data['user'] = $user;
                 
         return view('users.profile', $this->data);

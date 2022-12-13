@@ -41,26 +41,6 @@ class Controller extends BaseController
         $this->data['movies'] = $movies;
     }
 
-    public function getAllEpisodesByShowId($id, $seasons) {
-
-        $appendable = $this->buildEpisodesRequest($seasons);
-        $epSearch = RegClient::get("https://api.themoviedb.org/3/tv/{$id}", [
-            'api_key' => $this->tmdbkey,
-            'append_to_response' => $appendable,
-        ]);
-
-        return $epSearch->json();
-    }
-
-    public function buildEpisodesRequest($seasons) {
-        
-        $episodesRequest = '';
-        foreach ($seasons as $season) {
-            $episodesRequest .= "season/{$season['season_number']},";
-        }
-        return $episodesRequest;
-    }
-
     public function home(Request $request) {
         $this->getBasicUserData();
 

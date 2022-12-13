@@ -62,10 +62,6 @@ Route::get('/user-movie/{id}', [UserController::class, 'addMovie'])->name('users
 // Remove movie from user
 Route::get('/user-movie/{id}/delete', [UserController::class, 'removeMovie'])->name('users.movie.delete')->middleware('auth');
 
-// Show user's TV shows
-
-// Show user's movies
-
 // Show user's profile
 Route::get('/user/{id}', [UserController::class, 'show'])->name('users.profile')->middleware(['auth']);
 
@@ -75,12 +71,12 @@ Route::post('/user/{id}/edit', [UserController::class, 'edit'])->name('users.edi
 
 /*
 |--------------------------------------------------------------------------
-| Movie routes
+| Item routes (view only)
 |--------------------------------------------------------------------------
 */
 
 // Show movie page
-Route::get('/movies/{id}', [MovieController::class, 'showMovie'])->name('movies.show');
+Route::get('/movies/{id}', [MovieController::class, 'show'])->name('movies.show');
 
 // Show show page
-Route::get('/shows/{id}', [ShowController::class, 'showShow'])->name('tv.show');
+Route::get('/shows/{id}', [ShowController::class, 'show'])->name('tv.show');
