@@ -7,7 +7,7 @@ NOTE: this project is a WIP. A better README will exist once it's ready, usable 
 ## Local Docker setup (not 100% complete)
 
 ### Dependencies
-  Docker
+  Docker<br>
   TMDB API key ([how-to|https://kb.synology.com/en-global/DSM/tutorial/How_to_apply_for_a_personal_API_key_to_get_video_info])
   
 <br>
