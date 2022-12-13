@@ -1,4 +1,4 @@
-# !!! **NOTE: this project is a WIP. A better README will exist once it's ready, usable and live.** !!!
+# !!! **NOTE: this project is a WIP. This README is not complete.** !!!
 
 <br>
 <br>
