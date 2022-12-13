@@ -8,6 +8,7 @@ NOTE: this project is a WIP. A better README will exist once it's ready, usable 
 
 ### Dependencies
   Docker
+  TMDB API key ([how-to|https://kb.synology.com/en-global/DSM/tutorial/How_to_apply_for_a_personal_API_key_to_get_video_info])
   
 <br>
 
@@ -63,7 +64,7 @@ docker-compose exec app php artisan key:generate
 
 <br>
 
-### Access the projects in yo browsah
+### Access the project in yo browsah
 
 http://server_domain_or_IP:8000, i.e. probably `localhost:8000`
 
