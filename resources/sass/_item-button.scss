@@ -1,19 +1,22 @@
 .item-button {
-    @apply mx-2 mb-1 flex text-center justify-center items-center;
+    @apply mb-1 flex flex-col w-auto md:flex-row text-center justify-center items-center;
     position: relative;
 
     .item-button__container {
-        @apply font-bold p-2 border border-2 border-stone-600 hover:bg-red-200 flex text-center justify-center items-center;
+        @apply font-bold border border-2 border-stone-600 hover:bg-red-200 flex flex-col text-center justify-start items-center w-full h-full;
         min-width: 160px;
     
     }
     .item-button__overlay {
-        @apply flex text-center justify-center items-center;
+        @apply flex text-center justify-center items-center w-full max-h-16 h-16 md:max-h-full md:h-full p-2 md:p-0 md:w-0 md:h-0 md:absolute;
         background: #000;
-        position: absolute;
-        width: 0;
-        height: 0;
+        color: #fff;
         overflow: hidden;
+
+    }
+
+    .item-button__title {
+        @apply p-2;
     }
 
     .item-button__divider {
@@ -21,7 +24,15 @@
     }
 
     .item-button__action {
-        @apply text-lg font-bold;
+        @apply text-lg font-bold h-full w-auto flex items-center;
+
+        &--remove {
+            @apply text-rose-400 md:text-white justify-start;
+        }
+
+        &--view {
+            @apply text-rose-100 md:text-white justify-end;
+        }
     }
 
     .item-button__action--remove:hover {
@@ -35,9 +46,9 @@
     &:hover {
      
         .item-button__overlay {
-            width: 100%;
-            height: 100%;
-            color: #fff;
+            @apply md:w-full md:h-full;
+            // height: 100%;
+            // color: #fff;
         }
     }
 }
