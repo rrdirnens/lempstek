@@ -1,8 +1,12 @@
+# !!! **NOTE: this project is a WIP. A better README will exist once it's ready, usable and live.** !!!
+
+<br>
+<br>
+
 # Entertainment Calendar 
 
 <br>
 
-NOTE: this project is a WIP. A better README will exist once it's ready, usable and live.
 
 ## Local Docker setup (not 100% complete)
 
